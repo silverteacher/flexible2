@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La classe flexible – témoignage d'un chef d'établissement</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      padding: 1em; 
+      background: #FAF4F0; 
+      color: #333; 
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 { 
+      font-size: 2em; 
+      margin-bottom: 0.3em;
+      color: #9B8B9E;
+    }
+    h2 { 
+      font-size: 1.5em; 
+      margin-bottom: 0.8em;
+      color: #6B5B6E;
+    }
+    h3 { 
+      font-size: 1.2em; 
+      color: #7A6A7D;
+    }
+    .intro {
+      font-size: 1.1em;
+      color: #666;
+      margin-bottom: 1.5em;
+      font-style: italic;
+    }
+    .progression { 
+      margin-bottom: 30px; 
+      display: flex; 
+      gap: 15px; 
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .step { 
+      width: 70px; 
+      height: 70px; 
+      border-radius: 50%; 
+      border: 3px solid #B8A6BB; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      background: #fff; 
+      opacity: 0.5; 
+      font-size: 1.3em;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .step.active { 
+      background: #B8A6BB; 
+      color: #fff; 
+      opacity: 1;
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(184, 166, 187, 0.5);
+    }
+    .section { 
+      border-radius: 15px; 
+      background: #F5EEF8; 
+      margin-bottom: 30px; 
+      padding: 25px 30px; 
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    }
+    label { 
+      font-weight: 600; 
+      font-size: 1.1em;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .phrase-trous {
+      font-size: 1.1em;
+      line-height: 1.8;
+      margin-bottom: 15px;
+      color: #555;
+    }
+    .phrase-trous .blank {
+      display: inline-block;
+      min-width: 150px;
+      border-bottom: 2px solid #B8A6BB;
+      padding: 0 5px;
+      margin: 0 5px;
+    }
+    input[type="text"], textarea { 
+      width: 100%; 
+      margin-bottom: 12px; 
+      padding: 10px 12px; 
+      border-radius: 8px; 
+      border: 2px solid #D4C4D7;
+      font-size: 1em;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus, textarea:focus {
+      outline: none;
+      border-color: #B8A6BB;
+    }
+    button { 
+      margin-top: 8px; 
+      background: #B8A6BB; 
+      color: #fff; 
+      border: none; 
+      border-radius: 8px; 
+      padding: 10px 20px; 
+      cursor: pointer; 
+      font-size: 1em;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background: #9B8B9E;
+      transform: translateY(-2px);
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .error { 
+      color: #D8686D; 
+      font-weight: bold; 
+      font-size: 1em;
+    }
+    .success { 
+      color: #6B9B6F; 
+      font-weight: bold; 
+      font-size: 1em;
+    }
+    .hint { 
+      background: #FFF4DB; 
+      color: #A67C2C; 
+      padding: 8px 15px; 
+      border-radius: 8px; 
+      font-size: 1em; 
+      margin-top: 10px; 
+      display: inline-block;
+    }
+    .notearea { 
+      min-height: 120px; 
+      font-size: 1em;
+    }
+    .hidden { 
+      display: none; 
+    }
+    #mindmap-preview img { 
+      max-width: 100%; 
+      height: auto;
+      border: 3px solid #B8A6BB; 
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+    #essai1-count, #essai2-count {
+      font-size: 0.95em;
+      color: #777;
+      margin-left: 10px;
+    }
+    audio { 
+      width: 100%; 
+      outline: none; 
+      margin: 15px 0;
+    }
+    #dl-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #9B8B9E;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1em;
+    }
+    #dl-link:hover {
+      text-decoration: underline;
+    }
+    .export-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    .export-buttons button {
+      margin-top: 0;
+    }
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      color: #777;
+      font-size: 0.9em;
+      border-top: 2px solid #D4C4D7;
+    }
+    footer a {
+      color: #9B8B9E;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 0.5em;
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      h2 {
+        font-size: 1.3em;
+      }
+      .step {
+        width: 55px;
+        height: 55px;
+        font-size: 1.1em;
+      }
+      .section {
+        padding: 15px 20px;
+      }
+      .progression {
+        gap: 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.3em;
+      }
+      .step {
+        width: 50px;
+        height: 50px;
+        font-size: 1em;
+      }
+      .export-buttons {
+        flex-direction: column;
+      }
+      .export-buttons button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>La classe flexible&nbsp;: témoignage d'un chef d'établissement</h1>
+  <p class="intro">Écoutez ces audios avec attention.</p>
+
+  <nav class="progression">
+    <div class="step active" id="step1">1</div>
+    <div class="step" id="step2">2</div>
+    <div class="step" id="step3">3</div>
+  </nav>
+
+  <div class="section" id="audio1-section">
+    <h2>Étape 1&nbsp;: Première écoute</h2>
+    <audio id="audio1" controls src="audio1.mp3"></audio>
+    <div id="form-clef1" class="hidden">
+      <div class="phrase-trous">
+        Le numérique a permis de limiter la pédagogie <span class="blank">_______________</span> (mot-clé) et de lui donner une dimension de <span class="blank">_______________</span> destinée aux élèves.
+      </div>
+      <form onsubmit="return verifierClef1(this);">
+        <label>Complétez le premier mot manquant :</label>
+        <input type="text" id="input-clef1" placeholder="Entrez le mot..." autocomplete="off">
+        <button type="submit">Valider</button>
+        <span id="essai1-count"></span>
+        <div id="clef1-msg"></div>
+        <div id="clef1-hint" class="hint hidden"></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="section hidden" id="audio2-section">
+    <h2>Étape 2&nbsp;: Deuxième écoute</h2>
+    <audio id="audio2" controls src="audio2.mp3"></audio>
+    <form onsubmit="return verifierClef2(this);" id="form-clef2" class="hidden">
+      <label>Quelle précaution faut-il prendre quand on accueille 35 élèves en salle flexible&nbsp;?</label>
+      <input type="text" id="input-clef2" placeholder="Entrez le mot..." autocomplete="off">
+      <button type="submit">Valider</button>
+      <span id="essai2-count"></span>
+      <div id="clef2-msg"></div>
+      <div id="clef2-hint" class="hint hidden"></div>
+    </form>
+  </div>
+  
+  <div class="section hidden" id="audio3-section">
+    <h2>Étape 3&nbsp;: Carte mentale</h2>
+    <p>Soumettez une carte mentale pour les leviers et les points de vigilance.</p>
+    <input type="file" accept="image/*" id="mindmap-input">
+    <button onclick="validateMindmap()" id="validate-btn" disabled>Valider l'upload</button>
+    <div id="mindmap-preview"></div>
+    <a id="dl-link" class="hidden" download="ma_cartementale.jpg">Télécharger l'image</a>
+    <div id="mindmap-confirm" class="success"></div>
+  </div>
+
+  <div class="section">
+    <h2>Notes personnelles</h2>
+    <textarea id="notes" class="notearea" placeholder="Prenez vos notes ici..."></textarea>
+    <div id="notes-status"></div>
+    <div class="export-buttons">
+      <button onclick="exporterNotesTXT()">Exporter en TXT</button>
+      <button onclick="exporterNotesPDF()">Exporter en PDF</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Créé par <strong>Amélie Silvert</strong><br>
+    DRANE Lille – Académie de Lille<br>
+    <a href="mailto:amelie.silvert@ac-lille.fr">amelie.silvert@ac-lille.fr</a></p>
+  </footer>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // Avancement jeu
+    function majProgression(etape) {
+      for(let i=1;i<=3;i++) {
+        document.getElementById("step"+i).className = "step" + (i<=etape?' active':'');
+      }
+    }
+
+    // NOTES — LocalStorage
+    const notesEl = document.getElementById("notes");
+    notesEl.value = localStorage.getItem("lflex2-notes")||"";
+    notesEl.oninput = ()=>{ localStorage.setItem("lflex2-notes", notesEl.value);
+      document.getElementById('notes-status').textContent = "Notes sauvegardées !";
+      setTimeout(()=>{document.getElementById('notes-status').textContent='';}, 1500);
+    };
+
+    // Export notes en TXT
+    function exporterNotesTXT() {
+      const notes = document.getElementById('notes').value;
+      if(!notes.trim()) {
+        alert('Aucune note à exporter !');
+        return;
+      }
+      const blob = new Blob([notes], {type: 'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'mes_notes_classe_flexible.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Export notes en PDF
+    function exporterNotesPDF() {
+      const notes = document.getElementById('notes').value;
+      if(!notes.trim()) {
+        alert('Aucune note à exporter !');
+        return;
+      }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      doc.setFontSize(16);
+      doc.text('Mes notes - La classe flexible', 20, 20);
+      doc.setFontSize(12);
+      
+      const lignes = doc.splitTextToSize(notes, 170);
+      doc.text(lignes, 20, 35);
+      
+      doc.save('mes_notes_classe_flexible.pdf');
+    }
+
+    // Afficher la question après écoute de l'audio 1
+    const audio1 = document.getElementById('audio1');
+    audio1.addEventListener('ended', function() {
+      document.getElementById('form-clef1').classList.remove('hidden');
+    });
+
+    // Afficher la question après écoute de l'audio 2
+    const audio2 = document.getElementById('audio2');
+    audio2.addEventListener('ended', function() {
+      document.getElementById('form-clef2').classList.remove('hidden');
+    });
+
+    // AUDIO 1 — Validation clef, essais, indice
+    let essais1 = parseInt(localStorage.getItem("lflex2-essais1")||"0");
+    majEssais1();
+    function verifierClef1(f) {
+      const val = document.getElementById("input-clef1").value.trim().toLowerCase();
+      const bons = ["descendante"];
+      essais1++;
+      localStorage.setItem("lflex2-essais1", essais1);
+      majEssais1();
+      if(bons.includes(val)){
+        majProgression(2);
+        document.getElementById("clef1-msg").innerHTML = '<span class="success">Bravo ! Passons à la suite</span>';
+        setTimeout(()=>{
+          document.getElementById("audio2-section").classList.remove("hidden");
+        },700);
+        return false;
+      }
+      document.getElementById("clef1-msg").innerHTML = '<span class="error">Non, essayez encore !</span>';
+      // Indice au 3ème essai
+      if(essais1>=3){
+        document.getElementById("clef1-hint").classList.remove("hidden");
+        document.getElementById("clef1-hint").textContent = 
+          "Indice : une pédagogie magistrale";
+      }
+      return false;
+    }
+    function majEssais1() {
+      document.getElementById("essai1-count").textContent = "Essais : "+essais1;
+    }
+
+    // AUDIO 2 — Validation clef, essais
+    let essais2 = parseInt(localStorage.getItem("lflex2-essais2")||"0");
+    majEssais2();
+    function verifierClef2(f) {
+      const val = document.getElementById("input-clef2").value.trim().toLowerCase();
+      essais2++;
+      localStorage.setItem("lflex2-essais2", essais2);
+      majEssais2();
+      if(val === "taille"){
+        majProgression(3);
+        document.getElementById("clef2-msg").innerHTML = '<span class="success">Bravo ! Passons à la suite</span>';
+        setTimeout(()=>{
+          document.getElementById("audio3-section").classList.remove("hidden");
+        },700);
+        return false;
+      }
+      document.getElementById("clef2-msg").innerHTML = '<span class="error">Non, essayez de nouveau !</span>';
+      // Indice au 3ème essai (si tu en veux un)
+      if(essais2>=3){
+        document.getElementById("clef2-hint").classList.remove("hidden");
+        document.getElementById("clef2-hint").textContent = 
+          "Indice : pensez à l'espace disponible";
+      }
+      return false;
+    }
+    function majEssais2() {
+      document.getElementById("essai2-count").textContent = "Essais : "+essais2;
+    }
+
+    // MINDMAP — Affichage et download
+    const mindmapInput = document.getElementById('mindmap-input');
+    const mindmapPreview = document.getElementById('mindmap-preview');
+    const validateBtn = document.getElementById('validate-btn');
+    let mindmapFile = null;
+
+    mindmapInput.addEventListener('change', function() {
+      const f = this.files[0];
+      if(f) {
+        const url = URL.createObjectURL(f);
+        mindmapPreview.innerHTML = "<img src='"+url+"'>";
+        validateBtn.disabled = false;
+        mindmapFile = f;
+      }
+    });
+
+    function validateMindmap() {
+      if(mindmapFile) {
+        document.getElementById('mindmap-confirm').textContent = "Votre carte mentale a été prise en compte !";
+        document.getElementById('dl-link').classList.remove('hidden');
+        // Simule le download local
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('dl-link').href = e.target.result;
+        };
+        reader.readAsDataURL(mindmapFile);
+      }
+    }
+  </script>
+</body>
+</html>
