@@ -159,7 +159,7 @@
       border-radius: 10px;
       margin-top: 15px;
     }
-    #essai1-count, #essai2-count {
+    #essai1-count, #essai1b-count, #essai2-count {
       font-size: 0.95em;
       color: #777;
       margin-left: 10px;
@@ -203,6 +203,13 @@
     }
     footer a:hover {
       text-decoration: underline;
+    }
+    .question-block {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      border-left: 4px solid #B8A6BB;
     }
     
     /* Responsive */
@@ -262,17 +269,36 @@
     <h2>Étape 1&nbsp;: Première écoute</h2>
     <audio id="audio1" controls src="audio1.mp3"></audio>
     <div id="form-clef1" class="hidden">
-      <div class="phrase-trous">
-        Le numérique a permis de limiter la pédagogie <span class="blank">_______________</span> (mot-clé) et de lui donner une dimension de <span class="blank">_______________</span> destinée aux élèves.
+      
+      <!-- Question 1 : premier mot -->
+      <div class="question-block" id="q1-block">
+        <div class="phrase-trous">
+          Le numérique a permis de limiter la pédagogie <span class="blank">_______________</span> (mot-clé)
+        </div>
+        <form onsubmit="return verifierClef1a(this);">
+          <label>Complétez le premier mot manquant :</label>
+          <input type="text" id="input-clef1a" placeholder="Entrez le mot..." autocomplete="off">
+          <button type="submit">Valider</button>
+          <span id="essai1-count"></span>
+          <div id="clef1a-msg"></div>
+          <div id="clef1a-hint" class="hint hidden"></div>
+        </form>
       </div>
-      <form onsubmit="return verifierClef1(this);">
-        <label>Complétez le premier mot manquant :</label>
-        <input type="text" id="input-clef1" placeholder="Entrez le mot..." autocomplete="off">
-        <button type="submit">Valider</button>
-        <span id="essai1-count"></span>
-        <div id="clef1-msg"></div>
-        <div id="clef1-hint" class="hint hidden"></div>
-      </form>
+
+      <!-- Question 2 : deuxième mot (masquée par défaut) -->
+      <div class="question-block hidden" id="q2-block">
+        <div class="phrase-trous">
+          et de lui donner une dimension de <span class="blank">_______________</span> destinée aux élèves.
+        </div>
+        <form onsubmit="return verifierClef1b(this);">
+          <label>Complétez le deuxième mot manquant :</label>
+          <input type="text" id="input-clef1b" placeholder="Entrez le mot..." autocomplete="off">
+          <button type="submit">Valider</button>
+          <span id="essai1b-count"></span>
+          <div id="clef1b-msg"></div>
+        </form>
+      </div>
+
     </div>
   </div>
 
@@ -380,45 +406,70 @@
       document.getElementById('form-clef2').classList.remove('hidden');
     });
 
-    // AUDIO 1 — Validation clef, essais, indice
-    let essais1 = parseInt(localStorage.getItem("lflex2-essais1")||"0");
-    majEssais1();
-    function verifierClef1(f) {
-      const val = document.getElementById("input-clef1").value.trim().toLowerCase();
+    // AUDIO 1 QUESTION A — Validation premier mot "descendante"
+    let essais1a = parseInt(localStorage.getItem("lflex2-essais1a")||"0");
+    majEssais1a();
+    function verifierClef1a(f) {
+      const val = document.getElementById("input-clef1a").value.trim().toLowerCase();
       const bons = ["descendante"];
-      essais1++;
-      localStorage.setItem("lflex2-essais1", essais1);
-      majEssais1();
+      essais1a++;
+      localStorage.setItem("lflex2-essais1a", essais1a);
+      majEssais1a();
+      if(bons.includes(val)){
+        document.getElementById("clef1a-msg").innerHTML = '<span class="success">Bravo ! Passons au deuxième mot</span>';
+        setTimeout(()=>{
+          document.getElementById("q2-block").classList.remove("hidden");
+        },700);
+        return false;
+      }
+      document.getElementById("clef1a-msg").innerHTML = '<span class="error">Non, essayez encore !</span>';
+      // Indice au 3ème essai
+      if(essais1a>=3){
+        document.getElementById("clef1a-hint").classList.remove("hidden");
+        document.getElementById("clef1a-hint").textContent = 
+          "Indice : une pédagogie magistrale";
+      }
+      return false;
+    }
+    function majEssais1a() {
+      document.getElementById("essai1-count").textContent = "Essais : "+essais1a;
+    }
+
+    // AUDIO 1 QUESTION B — Validation deuxième mot "ressource"
+    let essais1b = parseInt(localStorage.getItem("lflex2-essais1b")||"0");
+    majEssais1b();
+    function verifierClef1b(f) {
+      const val = document.getElementById("input-clef1b").value.trim().toLowerCase();
+      const bons = ["ressource"];
+      essais1b++;
+      localStorage.setItem("lflex2-essais1b", essais1b);
+      majEssais1b();
       if(bons.includes(val)){
         majProgression(2);
-        document.getElementById("clef1-msg").innerHTML = '<span class="success">Bravo ! Passons à la suite</span>';
+        document.getElementById("clef1b-msg").innerHTML = '<span class="success">Bravo ! Passons à la suite</span>';
         setTimeout(()=>{
           document.getElementById("audio2-section").classList.remove("hidden");
         },700);
         return false;
       }
-      document.getElementById("clef1-msg").innerHTML = '<span class="error">Non, essayez encore !</span>';
-      // Indice au 3ème essai
-      if(essais1>=3){
-        document.getElementById("clef1-hint").classList.remove("hidden");
-        document.getElementById("clef1-hint").textContent = 
-          "Indice : une pédagogie magistrale";
-      }
+      document.getElementById("clef1b-msg").innerHTML = '<span class="error">Non, essayez encore !</span>';
       return false;
     }
-    function majEssais1() {
-      document.getElementById("essai1-count").textContent = "Essais : "+essais1;
+    function majEssais1b() {
+      document.getElementById("essai1b-count").textContent = "Essais : "+essais1b;
     }
 
-    // AUDIO 2 — Validation clef, essais
+    // AUDIO 2 — Validation clef
     let essais2 = parseInt(localStorage.getItem("lflex2-essais2")||"0");
     majEssais2();
     function verifierClef2(f) {
       const val = document.getElementById("input-clef2").value.trim().toLowerCase();
+      // Accepte "taille", "la taille de la classe", "la taille des espaces", etc.
+      const reponseValide = val.includes("taille");
       essais2++;
       localStorage.setItem("lflex2-essais2", essais2);
       majEssais2();
-      if(val === "taille"){
+      if(reponseValide){
         majProgression(3);
         document.getElementById("clef2-msg").innerHTML = '<span class="success">Bravo ! Passons à la suite</span>';
         setTimeout(()=>{
@@ -427,7 +478,7 @@
         return false;
       }
       document.getElementById("clef2-msg").innerHTML = '<span class="error">Non, essayez de nouveau !</span>';
-      // Indice au 3ème essai (si tu en veux un)
+      // Indice au 3ème essai
       if(essais2>=3){
         document.getElementById("clef2-hint").classList.remove("hidden");
         document.getElementById("clef2-hint").textContent = 
