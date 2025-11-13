@@ -3,495 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mission Beatles - Classe Flexible</title>
+  <title>Mission Rolling Stones - Classe Flexible</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    body { 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-      padding: 1em; 
-      background: linear-gradient(135deg, #4A90E2 0%, #5B6FB5 100%);
-      color: #222; 
-      font-size: 16px;
-      line-height: 1.6;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    /* INTRODUCTION BEATLES */
-    .mission-intro {
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      position: relative;
-      border: 3px solid #4A90E2;
-    }
-    .mission-intro h1 {
-      text-align: center;
-      color: #4A90E2;
-      font-size: 2.2em;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    }
-    .beatles-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-    }
-    .music-icon {
-      font-size: 3em;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-    .beatles-silhouette {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .beatle {
-      width: 60px;
-      height: 80px;
-      background: linear-gradient(180deg, #5B6FB5 0%, #4A90E2 100%);
-      border-radius: 50% 50% 0 0;
-      position: relative;
-      animation: walk 1.5s ease-in-out infinite;
-    }
-    .beatle:nth-child(1) { animation-delay: 0s; }
-    .beatle:nth-child(2) { animation-delay: 0.2s; }
-    .beatle:nth-child(3) { animation-delay: 0.4s; }
-    .beatle:nth-child(4) { animation-delay: 0.6s; }
-    @keyframes walk {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-    .mission-text {
-      background: #F0F7FF;
-      padding: 20px;
-      border-radius: 12px;
-      border-left: 5px solid #4A90E2;
-      font-size: 1.05em;
-      line-height: 1.8;
-    }
-    .mission-text strong {
-      color: #4A90E2;
-      font-size: 1.1em;
-    }
-    .mission-text ul {
-      margin: 15px 0;
-      padding-left: 25px;
-    }
-    .mission-text li {
-      margin: 8px 0;
-    }
-    
-    /* SECTION INDICES */
-    .indice-section {
-      background: linear-gradient(135deg, #FFA94D 0%, #FFB366 100%);
-      border-radius: 20px;
-      padding: 25px;
-      margin-bottom: 30px;
-      box-shadow: 0 8px 30px rgba(255, 169, 77, 0.3);
-      border: 3px solid #F79A3E;
-    }
-    .indice-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .indice-header h2 {
-      color: white;
-      font-size: 1.8em;
-      margin: 0;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    }
-    .escape-icon {
-      font-size: 2.5em;
-      animation: bounce 2s ease-in-out infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .indice-content {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .indice-content p {
-      font-size: 1.1em;
-      color: #333;
-      margin: 10px 0;
-      line-height: 1.8;
-    }
-    .indice-content strong {
-      color: #F79A3E;
-      font-size: 1.15em;
-    }
-    .indice-warning {
-      background: #FFF4E6;
-      color: #9A6324;
-      padding: 12px;
-      border-radius: 8px;
-      border-left: 4px solid #FFA94D;
-      margin-top: 15px;
-      font-style: italic;
-    }
-    
-    .container {
-      background: white;
-      border-radius: 15px;
-      padding: 30px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-    }
-    h1 { 
-      font-size: 2em; 
-      margin-bottom: 0.3em;
-      color: #4A90E2;
-    }
-    h2 { 
-      font-size: 1.5em; 
-      margin-bottom: 0.8em;
-      color: #333;
-    }
-    h3 { 
-      font-size: 1.2em; 
-      color: #555;
-    }
-    .progression { 
-      margin-bottom: 30px; 
-      display: flex; 
-      gap: 15px; 
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .step { 
-      width: 70px; 
-      height: 70px; 
-      border-radius: 50%; 
-      border: 3px solid #4A90E2; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      background: #fff; 
-      opacity: 0.5; 
-      font-size: 1.3em;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-    .step.active { 
-      background: #4A90E2; 
-      color: #fff; 
-      opacity: 1;
-      transform: scale(1.1);
-      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
-    }
-    .section { 
-      border-radius: 15px; 
-      background: #F8FBFF; 
-      margin-bottom: 30px; 
-      padding: 25px 30px; 
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-    }
-    label { 
-      font-weight: 600; 
-      font-size: 1.1em;
-      display: block;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    input[type="text"], textarea { 
-      width: 100%; 
-      margin-bottom: 12px; 
-      padding: 10px 12px; 
-      border-radius: 8px; 
-      border: 2px solid #B8D4F1;
-      font-size: 1em;
-      transition: border-color 0.3s ease;
-    }
-    input[type="text"]:focus, textarea:focus {
-      outline: none;
-      border-color: #4A90E2;
-    }
-    button { 
-      margin-top: 8px; 
-      background: #4A90E2; 
-      color: #fff; 
-      border: none; 
-      border-radius: 8px; 
-      padding: 12px 24px; 
-      cursor: pointer; 
-      font-size: 1em;
-      font-weight: 600;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-    button:hover {
-      background: #3A7BC8;
-      transform: translateY(-2px);
-    }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
-    }
-    .btn-success {
-      background: #50C878;
-    }
-    .btn-success:hover {
-      background: #3FB264;
-    }
-    .error { 
-      color: #E74C3C; 
-      font-weight: bold; 
-      font-size: 1em;
-    }
-    .success { 
-      color: #50C878; 
-      font-weight: bold; 
-      font-size: 1em;
-    }
-    .hint { 
-      background: #FFF4E6; 
-      color: #9A6324; 
-      padding: 8px 15px; 
-      border-radius: 8px; 
-      font-size: 1em; 
-      margin-top: 10px; 
-      display: inline-block;
-    }
-    .notearea { 
-      min-height: 120px; 
-      font-size: 1em;
-    }
-    .hidden { 
-      display: none; 
-    }
-    #mindmap-preview img { 
-      max-width: 100%; 
-      height: auto;
-      border: 3px solid #B8D4F1; 
-      border-radius: 10px;
-      margin-top: 15px;
-    }
-    #essai1-count, #essai2-count {
-      font-size: 0.95em;
-      color: #666;
-      margin-left: 10px;
-    }
-    audio { 
-      width: 100%; 
-      outline: none; 
-      margin: 15px 0;
-    }
-    #dl-link {
-      display: inline-block;
-      margin-top: 15px;
-      color: #4A90E2;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 1em;
-    }
-    #dl-link:hover {
-      text-decoration: underline;
-    }
-    .export-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-      flex-wrap: wrap;
-    }
-    .export-buttons button {
-      margin-top: 0;
-    }
-    
-    /* Section finale */
-    .final-section {
-      background: linear-gradient(135deg, #FFA94D 0%, #FFB976 100%);
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      margin-top: 30px;
-      box-shadow: 0 5px 20px rgba(255, 169, 77, 0.3);
-    }
-    .final-section h2 {
-      color: white;
-      font-size: 1.8em;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    }
-    .envelope-section {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-    .beatles-names {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 15px;
-    }
-    .beatles-names button {
-      background: #5B6FB5;
-      font-size: 1.1em;
-      padding: 15px 25px;
-    }
-    .beatles-names button:hover {
-      background: #4A5A96;
-    }
-    
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      padding: 20px;
-      color: white;
-      font-size: 0.9em;
-    }
-    footer a {
-      color: #FFD89B;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-      body {
-        padding: 0.5em;
-        font-size: 14px;
-      }
-      .mission-intro h1 {
-        font-size: 1.6em;
-      }
-      .music-icon {
-        font-size: 2em;
-      }
-      .escape-icon {
-        font-size: 2em;
-      }
-      .beatle {
-        width: 45px;
-        height: 60px;
-      }
-      h1 {
-        font-size: 1.5em;
-      }
-      h2 {
-        font-size: 1.3em;
-      }
-      .step {
-        width: 55px;
-        height: 55px;
-        font-size: 1.1em;
-      }
-      .section, .mission-intro, .container, .indice-section {
-        padding: 15px 20px;
-      }
-      .progression {
-        gap: 10px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .mission-intro h1 {
-        font-size: 1.4em;
-      }
-      .step {
-        width: 50px;
-        height: 50px;
-        font-size: 1em;
-      }
-      .export-buttons {
-        flex-direction: column;
-      }
-      .export-buttons button, .beatles-names button {
-        width: 100%;
-      }
-    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 1em; background: linear-gradient(135deg, #C41E3A 0%, #8B0000 100%); color: #222; font-size: 16px; line-height: 1.6; max-width: 1200px; margin: 0 auto; }
+    .mission-intro { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; border: 3px solid #C41E3A; }
+    .mission-intro h1 { text-align: center; color: #C41E3A; font-size: 2.2em; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+    .stones-header { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; }
+    .music-icon { font-size: 3em; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    .tongue-logo { font-size: 4em; animation: wiggle 3s ease-in-out infinite; }
+    @keyframes wiggle { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+    .mission-text { background: #FFF0F0; padding: 20px; border-radius: 12px; border-left: 5px solid #C41E3A; font-size: 1.05em; line-height: 1.8; }
+    .mission-text strong { color: #C41E3A; font-size: 1.1em; }
+    .mission-text ul { margin: 15px 0; padding-left: 25px; }
+    .mission-text li { margin: 8px 0; }
+    .indice-section { background: linear-gradient(135deg, #FFA94D 0%, #FFB366 100%); border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 8px 30px rgba(255, 169, 77, 0.3); border: 3px solid #F79A3E; }
+    .indice-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
+    .indice-header h2 { color: white; font-size: 1.8em; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .escape-icon { font-size: 2.5em; animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .indice-content { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+    .indice-content p { font-size: 1.1em; color: #333; margin: 10px 0; line-height: 1.8; }
+    .indice-content strong { color: #F79A3E; font-size: 1.15em; }
+    .indice-warning { background: #FFF4E6; color: #9A6324; padding: 12px; border-radius: 8px; border-left: 4px solid #FFA94D; margin-top: 15px; font-style: italic; }
+    .container { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 25px rgba(0,0,0,0.15); }
+    h1 { font-size: 2em; margin-bottom: 0.3em; color: #C41E3A; }
+    h2 { font-size: 1.5em; margin-bottom: 0.8em; color: #333; }
+    h3 { font-size: 1.2em; color: #555; }
+    .progression { margin-bottom: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    .step { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #C41E3A; display: flex; align-items: center; justify-content: center; background: #fff; opacity: 0.5; font-size: 1.3em; font-weight: bold; transition: all 0.3s ease; }
+    .step.active { background: #C41E3A; color: #fff; opacity: 1; transform: scale(1.1); box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4); }
+    .section { border-radius: 15px; background: #FFF8F8; margin-bottom: 30px; padding: 25px 30px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08); }
+    label { font-weight: 600; font-size: 1.1em; display: block; margin-bottom: 10px; color: #333; }
+    input[type="text"], textarea { width: 100%; margin-bottom: 12px; padding: 10px 12px; border-radius: 8px; border: 2px solid #F0B0B0; font-size: 1em; transition: border-color 0.3s ease; }
+    input[type="text"]:focus, textarea:focus { outline: none; border-color: #C41E3A; }
+    button { margin-top: 8px; background: #C41E3A; color: #fff; border: none; border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1em; font-weight: 600; transition: background 0.3s ease, transform 0.2s ease; }
+    button:hover { background: #A01830; transform: translateY(-2px); }
+    button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    .btn-success { background: #50C878; }
+    .btn-success:hover { background: #3FB264; }
+    .error { color: #E74C3C; font-weight: bold; font-size: 1em; }
+    .success { color: #50C878; font-weight: bold; font-size: 1em; }
+    .hint { background: #FFF4E6; color: #9A6324; padding: 8px 15px; border-radius: 8px; font-size: 1em; margin-top: 10px; display: inline-block; }
+    .notearea { min-height: 120px; font-size: 1em; }
+    .hidden { display: none; }
+    #mindmap-preview img { max-width: 100%; height: auto; border: 3px solid #F0B0B0; border-radius: 10px; margin-top: 15px; }
+    #essai1-count, #essai2-count { font-size: 0.95em; color: #666; margin-left: 10px; }
+    audio { width: 100%; outline: none; margin: 15px 0; }
+    #dl-link { display: inline-block; margin-top: 15px; color: #C41E3A; font-weight: 600; text-decoration: none; font-size: 1em; }
+    #dl-link:hover { text-decoration: underline; }
+    .export-buttons { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+    .export-buttons button { margin-top: 0; }
+    .final-section { background: linear-gradient(135deg, #FFA94D 0%, #FFB976 100%); padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px; box-shadow: 0 5px 20px rgba(255, 169, 77, 0.3); }
+    .final-section h2 { color: white; font-size: 1.8em; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .envelope-section { background: white; padding: 20px; border-radius: 10px; margin-top: 20px; }
+    .mick-button { background: #C41E3A; font-size: 1.2em; padding: 20px 40px; margin-top: 20px; }
+    .mick-button:hover { background: #A01830; }
+    footer { text-align: center; margin-top: 50px; padding: 20px; color: white; font-size: 0.9em; }
+    footer a { color: #FFD89B; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 768px) { body { padding: 0.5em; font-size: 14px; } .mission-intro h1 { font-size: 1.6em; } .music-icon { font-size: 2em; } .tongue-logo { font-size: 3em; } .escape-icon { font-size: 2em; } h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } .step { width: 55px; height: 55px; font-size: 1.1em; } .section, .mission-intro, .container, .indice-section { padding: 15px 20px; } .progression { gap: 10px; } }
+    @media (max-width: 480px) { .mission-intro h1 { font-size: 1.4em; } .step { width: 50px; height: 50px; font-size: 1em; } .export-buttons { flex-direction: column; } .export-buttons button { width: 100%; } }
   </style>
 </head>
 <body>
-
-  <!-- INTRODUCTION BEATLES -->
   <div class="mission-intro">
-    <div class="beatles-header">
-      <span class="music-icon">🎵</span>
-      <h1>Mission pour le groupe 1 BEATLES</h1>
-      <span class="music-icon">🎶</span>
+    <div class="stones-header">
+      <span class="music-icon">🎸</span>
+      <h1>Mission pour le groupe 2 ROLLING STONES</h1>
+      <span class="tongue-logo">👅</span>
     </div>
-    
-    <div class="beatles-silhouette">
-      <div class="beatle"></div>
-      <div class="beatle"></div>
-      <div class="beatle"></div>
-      <div class="beatle"></div>
-    </div>
-    
     <div class="mission-text">
       <p><strong>Bienvenue dans cette mission "La parole aux praticiens de la classe flexible"</strong></p>
-      
       <p><strong>Vous devez en 20 minutes :</strong></p>
       <ul>
         <li>🎧 Écouter les audios</li>
         <li>📝 Prendre des notes</li>
         <li>🔑 Trouver les mots codes pour obtenir le message final et découvrir l'enveloppe</li>
       </ul>
-      
       <p>À l'issue de l'écoute, discutez de ce que vous avez découvert et réalisez une <strong>carte mentale</strong> avec les points saillants du propos du chef d'établissement.</p>
-      
-      <p>Puis partez à la recherche du groupe <strong>Rolling Stones</strong> pour échanger avec eux en vous tenant debout sur vos questions, découvertes et réflexions.</p>
-      
+      <p>Puis partez à la recherche du groupe <strong>Beatles</strong> pour échanger avec eux en vous tenant debout sur vos questions, découvertes et réflexions.</p>
       <p style="text-align: center; font-size: 1.2em; margin-top: 15px;">🎸 <strong>Bonne chance !</strong> 🎸</p>
     </div>
   </div>
-
-  <!-- SECTION INDICES ESCAPE TEAM -->
   <div class="indice-section">
     <div class="indice-header">
-      <span class="escape-icon">🔓</span>
+      <span class="escape-icon">🌟</span>
       <h2>Indices pour l'Escape Team</h2>
-      <span class="escape-icon">🗝️</span>
+      <span class="escape-icon">🪐</span>
     </div>
     <div class="indice-content">
-      <p><strong>Si l'équipe Escape Team vous sollicite gentiment, vous pouvez leur donner cet indice :</strong></p>
-      <p style="font-size: 1.2em; color: #F79A3E; font-weight: 600; text-align: center; margin: 20px 0;">
-        💡 Indice 1 : Regardez le labyrinthe après avoir tracé les lignes et prenez du recul.
-      </p>
-      <div class="indice-warning">
-        ⚠️ Cet indice ne doit être donné que si l'équipe le demande poliment !
-      </div>
+      <p><strong>Si un membre de l'Escape Team vous sollicite avec le sourire, vous pouvez leur donner cet indice :</strong></p>
+      <p style="font-size: 1.2em; color: #F79A3E; font-weight: 600; text-align: center; margin: 20px 0;">💡 Indice 2 : Découpez puis pliez la feuille en suivant l'emplacement décrit des planètes et comptez le nombre d'étoiles.</p>
+      <div class="indice-warning">⚠️ Cet indice ne doit être donné que si l'équipe le demande avec le sourire !</div>
     </div>
   </div>
-
   <div class="container">
     <h1>La classe flexible : témoignage d'un chef d'établissement</h1>
-
     <nav class="progression">
       <div class="step active" id="step1">1</div>
       <div class="step" id="step2">2</div>
       <div class="step" id="step3">3</div>
       <div class="step" id="step4">4</div>
     </nav>
-
     <div class="section" id="audio1-section">
       <h2>Étape 1 : Première écoute</h2>
       <audio id="audio1" controls src="audio1.mp3"></audio>
       <form onsubmit="return verifierClef1(this);" id="form-clef1" class="hidden">
-        <label>Quel adjectif est associé aux feuilles repositionnables ?</label>
+        <label>Quel mot clé est mentionné dans l'audio ?</label>
         <input type="text" id="input-clef1" placeholder="Entrez le mot..." autocomplete="off">
         <button type="submit">Valider</button>
         <span id="essai1-count"></span>
@@ -499,31 +119,28 @@
         <div id="clef1-hint" class="hint hidden"></div>
       </form>
     </div>
-
     <div class="section hidden" id="audio2-section">
       <h2>Étape 2 : Deuxième écoute</h2>
       <audio id="audio2" controls src="audio2.mp3"></audio>
       <form onsubmit="return verifierClef2(this);" id="form-clef2" class="hidden">
-        <label>Quel mot indique un travail collégial entre élèves ?</label>
+        <label>Quel mot indique un aspect important mentionné ?</label>
         <input type="text" id="input-clef2" placeholder="Entrez le mot..." autocomplete="off">
         <button type="submit">Valider</button>
         <span id="essai2-count"></span>
         <div id="clef2-msg"></div>
       </form>
     </div>
-    
     <div class="section hidden" id="audio3-section">
-      <h2>Étape 3 : Troisième écoute et mot code</h2>
+      <h2>Étape 3 : Troisième écoute et métaphore</h2>
       <audio id="audio3" controls src="audio3.mp3"></audio>
-      <p>📝 Écoutez attentivement pour découvrir le mot code qui évoque les différentes méthodes de travail au choix des élèves.</p>
-      <form onsubmit="return verifierMotCode(this);" id="form-motcode" class="hidden">
-        <label>Quel est le mot code ? (Attention, la réponse est en deux mots)</label>
-        <input type="text" id="input-motcode" placeholder="Entrez les deux mots..." autocomplete="off">
-        <button type="submit">Valider le mot code</button>
-        <div id="motcode-msg"></div>
+      <p>📝 Écoutez attentivement pour découvrir la métaphore utilisée par le chef d'établissement.</p>
+      <form onsubmit="return verifierMetaphore(this);" id="form-metaphore" class="hidden">
+        <label>Quelle est la métaphore utilisée pour indiquer que l'expérience classe flexible en vaut la peine ? (7 mots)</label>
+        <input type="text" id="input-metaphore" placeholder="Entrez la métaphore complète..." autocomplete="off">
+        <button type="submit">Valider la métaphore</button>
+        <div id="metaphore-msg"></div>
       </form>
     </div>
-    
     <div class="section hidden" id="mindmap-section">
       <h2>Étape 4 : Carte mentale et validation</h2>
       <p>Soumettez une carte mentale des éléments de la classe flexible pour un échange avec l'autre groupe.</p>
@@ -532,14 +149,12 @@
       <div id="mindmap-preview"></div>
       <a id="dl-link" class="hidden" download="ma_cartementale.jpg">Télécharger l'image</a>
       <div id="mindmap-confirm" class="success"></div>
-      
       <div id="activity-validation" class="hidden" style="margin-top: 25px; padding: 20px; background: #E8F5E9; border-radius: 10px;">
         <p style="font-size: 1.1em; margin-bottom: 15px;">✅ Avez-vous bien réalisé les activités et discuté avec vos collègues ?</p>
         <button onclick="validerActivites()" class="btn-success" style="font-size: 1.1em;">J'ai bien réalisé les activités et discuté avec les collègues</button>
         <div id="validation-msg" style="margin-top: 15px;"></div>
       </div>
     </div>
-
     <div class="section">
       <h2>Notes personnelles</h2>
       <textarea id="notes" class="notearea" placeholder="Prenez vos notes ici..."></textarea>
@@ -550,218 +165,39 @@
       </div>
     </div>
   </div>
-
-  <!-- SECTION FINALE -->
   <div class="final-section hidden" id="final-section">
     <h2>🎉 MESSAGE FINAL 🎉</h2>
     <div class="envelope-section">
       <h3>🎸 Récupération de l'enveloppe bonus 🎸</h3>
-      <p style="font-size: 1.2em; margin: 20px 0;">Envoyez un membre du groupe Beatles pour rencontrer l'animateur et récupérer l'enveloppe bonus !</p>
-      <p style="font-weight: 600; margin-bottom: 15px;">Qui va chercher l'enveloppe ?</p>
-      <div class="beatles-names">
-        <button onclick="envoyerBeatle('John')">🎤 John</button>
-        <button onclick="envoyerBeatle('Paul')">🎸 Paul</button>
-        <button onclick="envoyerBeatle('Ringo')">🥁 Ringo</button>
-        <button onclick="envoyerBeatle('George')">🎸 George</button>
-      </div>
+      <p style="font-size: 1.2em; margin: 20px 0;">Envoyez <strong>Mick</strong> pour me rencontrer et récupérer l'enveloppe bonus !</p>
+      <button onclick="envoyerMick()" class="mick-button">👅 Envoyer Mick chercher l'enveloppe</button>
       <div id="envoi-msg" style="margin-top: 20px; font-size: 1.2em; font-weight: bold;"></div>
     </div>
   </div>
-
   <footer>
-    <p>🎨 Créé avec passion par <strong>Amélie Silvert</strong><br>
-    DRANE Lille – Délégation Régionale Académique au Numérique Éducatif<br>
-    Académie de Lille<br>
-    📧 <a href="mailto:amelie.silvert@ac-lille.fr">amelie.silvert@ac-lille.fr</a></p>
+    <p>Créé par <strong>Amélie Silvert</strong><br>DRANE Lille – Délégation Régionale Académique au Numérique Éducatif<br>Académie de Lille<br>📧 <a href="mailto:amelie.silvert@ac-lille.fr">amelie.silvert@ac-lille.fr</a></p>
   </footer>
-  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    // Avancement jeu
-    function majProgression(etape) {
-      for(let i=1;i<=4;i++) {
-        document.getElementById("step"+i).className = "step" + (i<=etape?' active':'');
-      }
-    }
-
-    // NOTES — LocalStorage
-    const notesEl = document.getElementById("notes");
-    notesEl.value = localStorage.getItem("lflex-notes")||"";
-    notesEl.oninput = ()=>{ localStorage.setItem("lflex-notes", notesEl.value);
-      document.getElementById('notes-status').textContent = "Notes sauvegardées !";
-      setTimeout(()=>{document.getElementById('notes-status').textContent='';}, 1500);
-    };
-
-    // Export notes en TXT
-    function exporterNotesTXT() {
-      const notes = document.getElementById('notes').value;
-      if(!notes.trim()) {
-        alert('Aucune note à exporter !');
-        return;
-      }
-      const blob = new Blob([notes], {type: 'text/plain'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'mes_notes_classe_flexible.txt';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    // Export notes en PDF
-    function exporterNotesPDF() {
-      const notes = document.getElementById('notes').value;
-      if(!notes.trim()) {
-        alert('Aucune note à exporter !');
-        return;
-      }
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      
-      doc.setFontSize(16);
-      doc.text('Mes notes - La classe flexible', 20, 20);
-      doc.setFontSize(12);
-      
-      const lignes = doc.splitTextToSize(notes, 170);
-      doc.text(lignes, 20, 35);
-      
-      doc.save('mes_notes_classe_flexible.pdf');
-    }
-
-    // Afficher la question après écoute de l'audio 1
-    const audio1 = document.getElementById('audio1');
-    audio1.addEventListener('ended', function() {
-      document.getElementById('form-clef1').classList.remove('hidden');
-    });
-
-    // Afficher la question après écoute de l'audio 2
-    const audio2 = document.getElementById('audio2');
-    audio2.addEventListener('ended', function() {
-      document.getElementById('form-clef2').classList.remove('hidden');
-    });
-
-    // Afficher la question du mot code après écoute de l'audio 3
-    const audio3 = document.getElementById('audio3');
-    audio3.addEventListener('ended', function() {
-      document.getElementById('form-motcode').classList.remove('hidden');
-    });
-
-    // AUDIO 1 — Validation clef, essais, indice
-    let essais1 = parseInt(localStorage.getItem("lflex-essais1")||"0");
-    majEssais1();
-    function verifierClef1(f) {
-      const val = document.getElementById("input-clef1").value.trim().toLowerCase().replace(/[\s\-]/g, "");
-      const bons = ["electrostatique","electrostatiques","électrostatique","électrostatiques"];
-      essais1++;
-      localStorage.setItem("lflex-essais1", essais1);
-      majEssais1();
-      if(bons.includes(val)){
-        majProgression(2);
-        document.getElementById("clef1-msg").innerHTML = '<span class="success">✅ Bravo ! Passons à la suite</span>';
-        setTimeout(()=>{
-          document.getElementById("audio2-section").classList.remove("hidden");
-          document.getElementById("audio2-section").scrollIntoView({behavior: 'smooth'});
-        },700);
-        return false;
-      }
-      document.getElementById("clef1-msg").innerHTML = '<span class="error">❌ Non, essayez encore !</span>';
-      if(essais1>=3){
-        document.getElementById("clef1-hint").classList.remove("hidden");
-        document.getElementById("clef1-hint").textContent = 
-          "💡 Indice : les feuilles sont détachables et déplaçables grâce à une charge statique";
-      }
-      return false;
-    }
-    function majEssais1() {
-      document.getElementById("essai1-count").textContent = "Essais : "+essais1;
-    }
-
-    // AUDIO 2 — Validation clef, essais
-    let essais2 = parseInt(localStorage.getItem("lflex-essais2")||"0");
-    majEssais2();
-    function verifierClef2(f) {
-      const val = document.getElementById("input-clef2").value.trim().toLowerCase();
-      essais2++;
-      localStorage.setItem("lflex-essais2", essais2);
-      majEssais2();
-      if(val === "collaboratif"){
-        majProgression(3);
-        document.getElementById("clef2-msg").innerHTML = '<span class="success">✅ Bravo ! Passons à la suite</span>';
-        setTimeout(()=>{
-          document.getElementById("audio3-section").classList.remove("hidden");
-          document.getElementById("audio3-section").scrollIntoView({behavior: 'smooth'});
-        },700);
-        return false;
-      }
-      document.getElementById("clef2-msg").innerHTML = '<span class="error">❌ Non, essayez de nouveau !</span>';
-      return false;
-    }
-    function majEssais2() {
-      document.getElementById("essai2-count").textContent = "Essais : "+essais2;
-    }
-
-    // MOT CODE — Validation (réponse : "les modalités")
-    function verifierMotCode(f) {
-      const val = document.getElementById("input-motcode").value.trim().toLowerCase().replace(/[\s\-']/g, "");
-      const bonnesReponses = ["lesmodalites", "lesmodalités", "modalites", "modalités"];
-      
-      if(bonnesReponses.includes(val)){
-        document.getElementById("motcode-msg").innerHTML = '<span class="success">🎉 Excellent ! Vous avez trouvé le mot code !</span>';
-        majProgression(4);
-        setTimeout(()=>{
-          document.getElementById("mindmap-section").classList.remove("hidden");
-          document.getElementById("mindmap-section").scrollIntoView({behavior: 'smooth'});
-        },700);
-        return false;
-      }
-      document.getElementById("motcode-msg").innerHTML = '<span class="error">❌ Ce n\'est pas le bon mot code. Réécoutez attentivement l\'audio !</span>';
-      return false;
-    }
-
-    // MINDMAP — Affichage et download
-    const mindmapInput = document.getElementById('mindmap-input');
-    const mindmapPreview = document.getElementById('mindmap-preview');
-    const validateBtn = document.getElementById('validate-btn');
-    let mindmapFile = null;
-
-    mindmapInput.addEventListener('change', function() {
-      const f = this.files[0];
-      if(f) {
-        const url = URL.createObjectURL(f);
-        mindmapPreview.innerHTML = "<img src='"+url+"'>";
-        validateBtn.disabled = false;
-        mindmapFile = f;
-      }
-    });
-
-    function validateMindmap() {
-      if(mindmapFile) {
-        document.getElementById('mindmap-confirm').textContent = "✅ Votre carte mentale a été prise en compte !";
-        document.getElementById('dl-link').classList.remove('hidden');
-        document.getElementById('activity-validation').classList.remove('hidden');
-        
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('dl-link').href = e.target.result;
-        };
-        reader.readAsDataURL(mindmapFile);
-      }
-    }
-
-    // VALIDATION ACTIVITÉS
-    function validerActivites() {
-      document.getElementById('validation-msg').innerHTML = '<span class="success" style="font-size: 1.2em;">✅ Parfait ! Vous pouvez maintenant découvrir le message final !</span>';
-      setTimeout(() => {
-        document.getElementById('final-section').classList.remove('hidden');
-        document.getElementById('final-section').scrollIntoView({behavior: 'smooth'});
-      }, 1000);
-    }
-
-    // ENVOI BEATLE
-    function envoyerBeatle(nom) {
-      document.getElementById('envoi-msg').innerHTML = 
-        '🎸 <span style="color: #5B6FB5;">' + nom + '</span> part chercher l\'enveloppe bonus !<br>🎉 Rendez-vous auprès de l\'animateur ! 🎉';
-    }
+    function majProgression(etape){for(let i=1;i<=4;i++){document.getElementById("step"+i).className="step"+(i<=etape?' active':'');}}
+    const notesEl=document.getElementById("notes");notesEl.value=localStorage.getItem("lflex-stones-notes")||"";notesEl.oninput=()=>{localStorage.setItem("lflex-stones-notes",notesEl.value);document.getElementById('notes-status').textContent="Notes sauvegardées !";setTimeout(()=>{document.getElementById('notes-status').textContent='';},1500);};
+    function exporterNotesTXT(){const notes=document.getElementById('notes').value;if(!notes.trim()){alert('Aucune note à exporter !');return;}const blob=new Blob([notes],{type:'text/plain'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='mes_notes_classe_flexible_stones.txt';a.click();URL.revokeObjectURL(url);}
+    function exporterNotesPDF(){const notes=document.getElementById('notes').value;if(!notes.trim()){alert('Aucune note à exporter !');return;}const{jsPDF}=window.jspdf;const doc=new jsPDF();doc.setFontSize(16);doc.text('Mes notes - La classe flexible',20,20);doc.setFontSize(12);const lignes=doc.splitTextToSize(notes,170);doc.text(lignes,20,35);doc.save('mes_notes_classe_flexible_stones.pdf');}
+    const audio1=document.getElementById('audio1');audio1.addEventListener('ended',function(){document.getElementById('form-clef1').classList.remove('hidden');});
+    const audio2=document.getElementById('audio2');audio2.addEventListener('ended',function(){document.getElementById('form-clef2').classList.remove('hidden');});
+    const audio3=document.getElementById('audio3');audio3.addEventListener('ended',function(){document.getElementById('form-metaphore').classList.remove('hidden');});
+    let essais1=parseInt(localStorage.getItem("lflex-stones-essais1")||"0");majEssais1();
+    function verifierClef1(f){const val=document.getElementById("input-clef1").value.trim().toLowerCase().replace(/[\s\-]/g,"");const bons=["motcle1","motcle"];essais1++;localStorage.setItem("lflex-stones-essais1",essais1);majEssais1();if(bons.includes(val)){majProgression(2);document.getElementById("clef1-msg").innerHTML='<span class="success">✅ Bravo ! Passons à la suite</span>';setTimeout(()=>{document.getElementById("audio2-section").classList.remove("hidden");document.getElementById("audio2-section").scrollIntoView({behavior:'smooth'});},700);return false;}document.getElementById("clef1-msg").innerHTML='<span class="error">❌ Non, essayez encore !</span>';if(essais1>=3){document.getElementById("clef1-hint").classList.remove("hidden");document.getElementById("clef1-hint").textContent="💡 Indice : réécoutez attentivement le début de l'audio";}return false;}
+    function majEssais1(){document.getElementById("essai1-count").textContent="Essais : "+essais1;}
+    let essais2=parseInt(localStorage.getItem("lflex-stones-essais2")||"0");majEssais2();
+    function verifierClef2(f){const val=document.getElementById("input-clef2").value.trim().toLowerCase();const bons=["motcle2"];essais2++;localStorage.setItem("lflex-stones-essais2",essais2);majEssais2();if(bons.includes(val)){majProgression(3);document.getElementById("clef2-msg").innerHTML='<span class="success">✅ Bravo ! Passons à la suite</span>';setTimeout(()=>{document.getElementById("audio3-section").classList.remove("hidden");document.getElementById("audio3-section").scrollIntoView({behavior:'smooth'});},700);return false;}document.getElementById("clef2-msg").innerHTML='<span class="error">❌ Non, essayez de nouveau !</span>';return false;}
+    function majEssais2(){document.getElementById("essai2-count").textContent="Essais : "+essais2;}
+    function verifierMetaphore(f){const val=document.getElementById("input-metaphore").value.trim().toLowerCase().replace(/['\-]/g,"");const bonnesReponses=["lejeuenvautlargementlachandelle","le jeu en vaut largement la chandelle","jeuenvautlargementlachandelle"];const normalise=val.replace(/\s+/g,"");if(bonnesReponses.some(rep=>normalise===rep.replace(/\s+/g,""))){document.getElementById("metaphore-msg").innerHTML='<span class="success">🎉 Excellent ! Vous avez trouvé la métaphore !</span>';majProgression(4);setTimeout(()=>{document.getElementById("mindmap-section").classList.remove("hidden");document.getElementById("mindmap-section").scrollIntoView({behavior:'smooth'});},700);return false;}document.getElementById("metaphore-msg").innerHTML='<span class="error">❌ Ce n\'est pas la bonne métaphore. Réécoutez attentivement l\'audio ! (7 mots attendus)</span>';return false;}
+    const mindmapInput=document.getElementById('mindmap-input');const mindmapPreview=document.getElementById('mindmap-preview');const validateBtn=document.getElementById('validate-btn');let mindmapFile=null;
+    mindmapInput.addEventListener('change',function(){const f=this.files[0];if(f){const url=URL.createObjectURL(f);mindmapPreview.innerHTML="<img src='"+url+"'>";validateBtn.disabled=false;mindmapFile=f;}});
+    function validateMindmap(){if(mindmapFile){document.getElementById('mindmap-confirm').textContent="✅ Votre carte mentale a été prise en compte !";document.getElementById('dl-link').classList.remove('hidden');document.getElementById('activity-validation').classList.remove('hidden');const reader=new FileReader();reader.onload=function(e){document.getElementById('dl-link').href=e.target.result;};reader.readAsDataURL(mindmapFile);}}
+    function validerActivites(){document.getElementById('validation-msg').innerHTML='<span class="success" style="font-size: 1.2em;">✅ Parfait ! Vous pouvez maintenant découvrir le message final !</span>';setTimeout(()=>{document.getElementById('final-section').classList.remove('hidden');document.getElementById('final-section').scrollIntoView({behavior:'smooth'});},1000);}
+    function envoyerMick(){document.getElementById('envoi-msg').innerHTML='👅 <span style="color: #C41E3A;"><strong>Mick</strong></span> part chercher l\'enveloppe bonus !<br>🎉 Rendez-vous auprès de l\'animateur ! 🎉';}
   </script>
 </body>
 </html>
