@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,12 +6,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mission Rolling Stones - Classe Flexible</title>
   <style>
-    /* Styles d'origine conservés, idem ta version ci-dessus */
-    /* ... (reprends tout ton block <style>) ... */
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 1em; background: linear-gradient(135deg, #8B4513 0%, #654321 100%); color: #222; font-size: 16px; line-height: 1.6; max-width: 1200px; margin: 0 auto; }
+    .mission-intro { background: white; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; border: 3px solid #D2691E; }
+    .mission-intro h1 { text-align: center; color: #D2691E; font-size: 2.2em; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+    .stones-header { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; }
+    .music-icon { font-size: 3em; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    .tongue-logo { font-size: 4em; animation: wiggle 3s ease-in-out infinite; }
+    @keyframes wiggle { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+    .mission-text { background: #FFF8F0; padding: 20px; border-radius: 12px; border-left: 5px solid #D2691E; font-size: 1.05em; line-height: 1.8; }
+    .mission-text strong { color: #D2691E; font-size: 1.1em; }
+    .mission-text ul { margin: 15px 0; padding-left: 25px; }
+    .mission-text li { margin: 8px 0; }
+    .timer-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 8px 30px rgba(210, 105, 30, 0.3); border: 3px solid #D2691E; text-align: center; }
+    .timer-display { font-size: 3.5em; font-weight: bold; color: #D2691E; margin: 20px 0; font-family: 'Courier New', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+    .timer-display.warning { color: #FF8C00; animation: blink 1s ease-in-out infinite; }
+    .timer-display.danger { color: #E74C3C; animation: blink 0.5s ease-in-out infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    .timer-controls { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+    .timer-controls button { background: #D2691E; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+    .timer-controls button:hover { background: #A0522D; transform: translateY(-2px); }
+    .timer-controls button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    .timer-controls button.pause-btn { background: #FFA94D; }
+    .timer-controls button.pause-btn:hover { background: #FF8C00; }
+    .timer-controls button.reset-btn { background: #666; }
+    .timer-controls button.reset-btn:hover { background: #555; }
+    .indice-section { background: linear-gradient(135deg, #FFA94D 0%, #FFB366 100%); border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 8px 30px rgba(255, 169, 77, 0.3); border: 3px solid #F79A3E; }
+    .indice-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
+    .indice-header h2 { color: white; font-size: 1.8em; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .escape-icon { font-size: 2.5em; animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .indice-content { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+    .indice-content p { font-size: 1.1em; color: #333; margin: 10px 0; line-height: 1.8; }
+    .indice-content strong { color: #F79A3E; font-size: 1.15em; }
+    .indice-warning { background: #FFF4E6; color: #9A6324; padding: 12px; border-radius: 8px; border-left: 4px solid #FFA94D; margin-top: 15px; font-style: italic; }
+    .container { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 5px 25px rgba(0,0,0,0.15); }
+    h1 { font-size: 2em; margin-bottom: 0.3em; color: #D2691E; }
+    h2 { font-size: 1.5em; margin-bottom: 0.8em; color: #333; }
+    h3 { font-size: 1.2em; color: #555; }
+    .progression { margin-bottom: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    .step { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #D2691E; display: flex; align-items: center; justify-content: center; background: #fff; opacity: 0.5; font-size: 1.3em; font-weight: bold; transition: all 0.3s ease; }
+    .step.active { background: #D2691E; color: #fff; opacity: 1; transform: scale(1.1); box-shadow: 0 4px 15px rgba(210, 105, 30, 0.4); }
+    .section { border-radius: 15px; background: #FFFAF5; margin-bottom: 30px; padding: 25px 30px; box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08); }
+    label { font-weight: 600; font-size: 1.1em; display: block; margin-bottom: 10px; color: #333; }
+    input[type="text"], textarea { width: 100%; margin-bottom: 12px; padding: 10px 12px; border-radius: 8px; border: 2px solid #E8C4A0; font-size: 1em; transition: border-color 0.3s ease; }
+    input[type="text"]:focus, textarea:focus { outline: none; border-color: #D2691E; }
+    button { margin-top: 8px; background: #D2691E; color: #fff; border: none; border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1em; font-weight: 600; transition: background 0.3s ease, transform 0.2s ease; }
+    button:hover { background: #A0522D; transform: translateY(-2px); }
+    button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    .btn-success { background: #50C878; }
+    .btn-success:hover { background: #3FB264; }
+    .error { color: #E74C3C; font-weight: bold; font-size: 1em; margin-top: 10px; }
+    .success { color: #50C878; font-weight: bold; font-size: 1em; margin-top: 10px; }
+    .hint { background: #FFF4E6; color: #9A6324; padding: 10px 15px; border-radius: 8px; font-size: 0.95em; margin-top: 10px; display: block; border-left: 4px solid #FFA94D; }
+    .notearea { min-height: 120px; font-size: 1em; }
+    .hidden { display: none; }
+    #mindmap-preview img { max-width: 100%; height: auto; border: 3px solid #E8C4A0; border-radius: 10px; margin-top: 15px; }
+    audio { width: 100%; outline: none; margin: 15px 0; }
+    #dl-link { display: inline-block; margin-top: 15px; color: #D2691E; font-weight: 600; text-decoration: none; font-size: 1em; }
+    #dl-link:hover { text-decoration: underline; }
+    .export-buttons { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+    .export-buttons button { margin-top: 0; }
+    .final-section { background: linear-gradient(135deg, #FFA94D 0%, #FFB976 100%); padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px; box-shadow: 0 5px 20px rgba(255, 169, 77, 0.3); }
+    .final-section h2 { color: white; font-size: 1.8em; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .envelope-section { background: white; padding: 20px; border-radius: 10px; margin-top: 20px; }
+    .mick-button { background: #D2691E; font-size: 1.2em; padding: 20px 40px; margin-top: 20px; }
+    .mick-button:hover { background: #A0522D; }
+    footer { text-align: center; margin-top: 50px; padding: 20px; color: white; font-size: 0.9em; }
+    footer a { color: #FFD89B; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .question-block { margin-bottom: 25px; padding: 20px; background: #FFF; border-radius: 10px; border-left: 4px solid #D2691E; }
+    @media (max-width: 768px) { body { padding: 0.5em; font-size: 14px; } .mission-intro h1 { font-size: 1.6em; } .music-icon { font-size: 2em; } .tongue-logo { font-size: 3em; } .escape-icon { font-size: 2em; } h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } .step { width: 55px; height: 55px; font-size: 1.1em; } .section, .mission-intro, .container, .indice-section, .timer-section { padding: 15px 20px; } .progression { gap: 10px; } .timer-display { font-size: 2.5em; } .timer-controls { flex-direction: column; } .timer-controls button { width: 100%; } }
+    @media (max-width: 480px) { .mission-intro h1 { font-size: 1.4em; } .step { width: 50px; height: 50px; font-size: 1em; } .export-buttons { flex-direction: column; } .export-buttons button { width: 100%; } .timer-display { font-size: 2em; } }
   </style>
 </head>
 <body>
-  <!-- INTRO -->
   <div class="mission-intro">
     <div class="stones-header">
       <span class="music-icon">🎸</span>
@@ -31,8 +102,29 @@
     </div>
   </div>
 
-  <!-- TIMER + INDICE ESCAPE-TEAM, gardés tel quel -->
-  <!-- ... (reprends ton HTML de chrono et d'indice) ... -->
+  <div class="timer-section">
+    <h2 style="color: #D2691E; margin-bottom: 15px;">⏱️ Chronomètre de Mission</h2>
+    <div class="timer-display" id="timer-display">20:00</div>
+    <div class="timer-controls">
+      <button id="start-btn" onclick="startTimer()">▶️ Démarrer</button>
+      <button id="pause-btn" class="pause-btn" onclick="pauseTimer()" disabled>⏸️ Pause</button>
+      <button id="reset-btn" class="reset-btn" onclick="resetTimer()">🔄 Réinitialiser</button>
+    </div>
+    <p id="timer-status" style="margin-top: 15px; font-size: 1.1em; color: #666;"></p>
+  </div>
+
+  <div class="indice-section">
+    <div class="indice-header">
+      <span class="escape-icon">🌟</span>
+      <h2>Indices pour l'Escape Team</h2>
+      <span class="escape-icon">🪐</span>
+    </div>
+    <div class="indice-content">
+      <p><strong>Si un membre de l'Escape Team vous sollicite avec le sourire, vous pouvez leur donner cet indice :</strong></p>
+      <p style="font-size: 1.2em; color: #F79A3E; font-weight: 600; text-align: center; margin: 20px 0;">💡 Indice 2 : Découpez puis pliez la feuille en suivant l'emplacement décrit des planètes et comptez le nombre d'étoiles.</p>
+      <div class="indice-warning">⚠️ Cet indice ne doit être donné que si l'équipe le demande avec le sourire !</div>
+    </div>
+  </div>
 
   <div class="container">
     <h1>La classe flexible : témoignage d'un chef d'établissement</h1>
@@ -42,27 +134,31 @@
       <div class="step" id="step3">3</div>
       <div class="step" id="step4">4</div>
     </nav>
-    
+
     <!-- AUDIO 1 -->
     <div class="section" id="audio1-section">
       <h2>Étape 1 : Première écoute</h2>
       <audio id="audio1" controls src="audio1.mp3"></audio>
 
-      <form onsubmit="return verifierQ1(this);" id="form-q1" class="hidden">
-        <label>Qu'a suscité la première salle flexible chez les professeurs ? (3 mots)</label>
-        <input type="text" id="input-q1" autocomplete="off" placeholder="Votre réponse">
-        <button type="submit">Valider</button>
-        <div id="msg-q1"></div>
-        <div id="indice-q1" class="hint hidden"></div>
-      </form>
+      <div class="question-block hidden" id="question-q1">
+        <form onsubmit="return verifierQ1(this);">
+          <label>Qu'a suscité la première salle flexible chez les professeurs ? (3 mots)</label>
+          <input type="text" id="input-q1" autocomplete="off" placeholder="Votre réponse">
+          <button type="submit">Valider</button>
+          <div id="msg-q1"></div>
+          <div id="indice-q1" class="hint hidden"></div>
+        </form>
+      </div>
 
-      <form onsubmit="return verifierQ2(this);" id="form-q2" class="hidden">
-        <label>Quelle est la force de la salle flexible pour des enseignants qui souhaitent l'utiliser sur un temps court ? (2 mots)</label>
-        <input type="text" id="input-q2" autocomplete="off" placeholder="Votre réponse">
-        <button type="submit">Valider</button>
-        <div id="msg-q2"></div>
-        <div id="indice-q2" class="hint hidden"></div>
-      </form>
+      <div class="question-block hidden" id="question-q2">
+        <form onsubmit="return verifierQ2(this);">
+          <label>Quelle est la force de la salle flexible pour des enseignants qui souhaitent l'utiliser sur un temps court ? (2 mots)</label>
+          <input type="text" id="input-q2" autocomplete="off" placeholder="Votre réponse">
+          <button type="submit">Valider</button>
+          <div id="msg-q2"></div>
+          <div id="indice-q2" class="hint hidden"></div>
+        </form>
+      </div>
     </div>
 
     <!-- AUDIO 2 -->
@@ -70,177 +166,290 @@
       <h2>Étape 2 : Deuxième écoute</h2>
       <audio id="audio2" controls src="audio2.mp3"></audio>
 
-      <form onsubmit="return verifierQ3(this);" id="form-q3" class="hidden">
-        <label>Quel est le premier point de vigilance pour installer des îlots ? (4 mots)</label>
-        <input type="text" id="input-q3" autocomplete="off" placeholder="Votre réponse">
-        <button type="submit">Valider</button>
-        <div id="msg-q3"></div>
-        <div id="indice-q3" class="hint hidden"></div>
-      </form>
+      <div class="question-block hidden" id="question-q3">
+        <form onsubmit="return verifierQ3(this);">
+          <label>Quel est le premier point de vigilance pour installer des îlots ? (4 mots)</label>
+          <input type="text" id="input-q3" autocomplete="off" placeholder="Votre réponse">
+          <button type="submit">Valider</button>
+          <div id="msg-q3"></div>
+          <div id="indice-q3" class="hint hidden"></div>
+        </form>
+      </div>
 
-      <form onsubmit="return verifierQ4(this);" id="form-q4" class="hidden">
-        <label>Quel est le second point de vigilance en ce qui concerne l'équipement de ces salles ? (2 mots)</label>
-        <input type="text" id="input-q4" autocomplete="off" placeholder="Votre réponse">
-        <button type="submit">Valider</button>
-        <div id="msg-q4"></div>
-        <div id="indice-q4" class="hint hidden"></div>
-      </form>
+      <div class="question-block hidden" id="question-q4">
+        <form onsubmit="return verifierQ4(this);">
+          <label>Quel est le second point de vigilance en ce qui concerne l'équipement de ces salles ? (2 mots)</label>
+          <input type="text" id="input-q4" autocomplete="off" placeholder="Votre réponse">
+          <button type="submit">Valider</button>
+          <div id="msg-q4"></div>
+          <div id="indice-q4" class="hint hidden"></div>
+        </form>
+      </div>
 
-      <form onsubmit="return verifierQ5(this);" id="form-q5" class="hidden">
-        <label>Le troisième point de vigilance ? (2 mots)</label>
-        <input type="text" id="input-q5" autocomplete="off" placeholder="Votre réponse">
-        <button type="submit">Valider</button>
-        <div id="msg-q5"></div>
-        <div id="indice-q5" class="hint hidden"></div>
-      </form>
+      <div class="question-block hidden" id="question-q5">
+        <form onsubmit="return verifierQ5(this);">
+          <label>Le troisième point de vigilance ? (2 mots)</label>
+          <input type="text" id="input-q5" autocomplete="off" placeholder="Votre réponse">
+          <button type="submit">Valider</button>
+          <div id="msg-q5"></div>
+          <div id="indice-q5" class="hint hidden"></div>
+        </form>
+      </div>
 
-      <form onsubmit="return verifierQ6(this);" id="form-q6" class="hidden">
-        <label>Comment répartir les enseignants sur ces salles ? Deux solutions. (1 à 4 mots attendus)</label>
-        <input type="text" id="input-q6" autocomplete="off" placeholder="Votre réponse">
-        <button type="submit">Valider</button>
-        <div id="msg-q6"></div>
-        <div id="indice-q6" class="hint hidden"></div>
-      </form>
+      <div class="question-block hidden" id="question-q6">
+        <form onsubmit="return verifierQ6(this);">
+          <label>Comment répartir les enseignants sur ces salles ? Deux solutions. (1 à 4 mots attendus)</label>
+          <input type="text" id="input-q6" autocomplete="off" placeholder="Votre réponse">
+          <button type="submit">Valider</button>
+          <div id="msg-q6"></div>
+          <div id="indice-q6" class="hint hidden"></div>
+        </form>
+      </div>
     </div>
 
-    <!-- ... (étapes suivantes carte mentale, notes, etc. gardées comme avant) ... -->
+    <!-- CARTE MENTALE -->
+    <div class="section hidden" id="mindmap-section">
+      <h2>Étape 3 : Carte mentale et validation</h2>
+      <p>Soumettez une carte mentale des éléments de la classe flexible pour un échange avec l'autre groupe.</p>
+      <input type="file" accept="image/*" id="mindmap-input">
+      <button onclick="validateMindmap()" id="validate-btn" disabled>Valider l'upload</button>
+      <div id="mindmap-preview"></div>
+      <a id="dl-link" class="hidden" download="ma_cartementale.jpg">Télécharger l'image</a>
+      <div id="mindmap-confirm" class="success"></div>
+      <div id="activity-validation" class="hidden" style="margin-top: 25px; padding: 20px; background: #E8F5E9; border-radius: 10px;">
+        <p style="font-size: 1.1em; margin-bottom: 15px;">✅ Avez-vous bien réalisé les activités et discuté avec vos collègues ?</p>
+        <button onclick="validerActivites()" class="btn-success" style="font-size: 1.1em;">J'ai bien réalisé les activités et discuté avec les collègues</button>
+        <div id="validation-msg" style="margin-top: 15px;"></div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="section">
+      <h2>Notes personnelles</h2>
+      <textarea id="notes" class="notearea" placeholder="Prenez vos notes ici..."></textarea>
+      <div id="notes-status"></div>
+      <div class="export-buttons">
+        <button onclick="exporterNotesTXT()">Exporter en TXT</button>
+        <button onclick="exporterNotesPDF()">Exporter en PDF</button>
+      </div>
+    </div>
   </div>
 
-  <!-- FINAL, FOOTER, ETC. gardés tel quel -->
-  <!-- ... -->
+  <!-- MESSAGE FINAL -->
+  <div class="final-section hidden" id="final-section">
+    <h2>🎉 MESSAGE FINAL 🎉</h2>
+    <div class="envelope-section">
+      <h3>🎸 Récupération de l'enveloppe bonus 🎸</h3>
+      <p style="font-size: 1.2em; margin: 20px 0;">Envoyez <strong>Mick</strong> pour me rencontrer et récupérer l'enveloppe bonus !</p>
+      <button onclick="envoyerMick()" class="mick-button">👅 Envoyer Mick chercher l'enveloppe</button>
+      <div id="envoi-msg" style="margin-top: 20px; font-size: 1.2em; font-weight: bold;"></div>
+    </div>
+  </div>
 
-<script>
-  // Activation questions audio 1
-  const audio1 = document.getElementById('audio1');
-  audio1.addEventListener('ended', function() {
-    document.getElementById('form-q1').classList.remove('hidden');
-  });
+  <footer>
+    <p>Créé par <strong>Amélie Silvert</strong><br>DRANE Lille – Délégation Régionale Académique au Numérique Éducatif<br>Académie de Lille<br>📧 <a href="mailto:amelie.silvert@ac-lille.fr">amelie.silvert@ac-lille.fr</a></p>
+  </footer>
 
-  // Activation question suivante après succès à chaque étape
-  function nextFormAudio1(formId) {
-    if (formId === 'form-q1') document.getElementById('form-q2').classList.remove('hidden');
-    if (formId === 'form-q2') document.getElementById('audio2-section').classList.remove('hidden');
-  }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // CHRONOMÈTRE
+    let timerInterval=null;let timeRemaining=1200;let isRunning=false;
+    function updateTimerDisplay(){const minutes=Math.floor(timeRemaining/60);const seconds=timeRemaining%60;const display=document.getElementById('timer-display');display.textContent=`${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;if(timeRemaining<=60&&timeRemaining>0){display.className='timer-display danger';}else if(timeRemaining<=300&&timeRemaining>60){display.className='timer-display warning';}else{display.className='timer-display';}}
+    function startTimer(){if(!isRunning){isRunning=true;document.getElementById('start-btn').disabled=true;document.getElementById('pause-btn').disabled=false;document.getElementById('timer-status').innerHTML='<span style="color: #50C878; font-weight: 600;">⏱️ Chronomètre en cours...</span>';timerInterval=setInterval(()=>{if(timeRemaining>0){timeRemaining--;updateTimerDisplay();}else{clearInterval(timerInterval);isRunning=false;document.getElementById('timer-status').innerHTML='<span style="color: #E74C3C; font-weight: 600;">⏰ TEMPS ÉCOULÉ !</span>';}},1000);}}
+    function pauseTimer(){if(isRunning){clearInterval(timerInterval);isRunning=false;document.getElementById('start-btn').disabled=false;document.getElementById('pause-btn').disabled=true;document.getElementById('timer-status').innerHTML='<span style="color: #FFA94D; font-weight: 600;">⏸️ Chronomètre en pause</span>';}}
+    function resetTimer(){clearInterval(timerInterval);isRunning=false;timeRemaining=1200;updateTimerDisplay();document.getElementById('start-btn').disabled=false;document.getElementById('pause-btn').disabled=true;document.getElementById('timer-status').textContent='';}
+    
+    // PROGRESSION
+    function majProgression(etape){for(let i=1;i<=4;i++){document.getElementById("step"+i).className="step"+(i<=etape?' active':'');}}
+    
+    // NOTES
+    const notesEl=document.getElementById("notes");notesEl.value=localStorage.getItem("lflex-stones-notes")||"";notesEl.oninput=()=>{localStorage.setItem("lflex-stones-notes",notesEl.value);document.getElementById('notes-status').textContent="Notes sauvegardées !";setTimeout(()=>{document.getElementById('notes-status').textContent='';},1500);};
+    function exporterNotesTXT(){const notes=document.getElementById('notes').value;if(!notes.trim()){alert('Aucune note à exporter !');return;}const blob=new Blob([notes],{type:'text/plain'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='mes_notes_classe_flexible_stones.txt';a.click();URL.revokeObjectURL(url);}
+    function exporterNotesPDF(){const notes=document.getElementById('notes').value;if(!notes.trim()){alert('Aucune note à exporter !');return;}const{jsPDF}=window.jspdf;const doc=new jsPDF();doc.setFontSize(16);doc.text('Mes notes - La classe flexible',20,20);doc.setFontSize(12);const lignes=doc.splitTextToSize(notes,170);doc.text(lignes,20,35);doc.save('mes_notes_classe_flexible_stones.pdf');}
+    
+    // AUDIO 1 - Activation questions
+    const audio1=document.getElementById('audio1');
+    audio1.addEventListener('ended',function(){
+      document.getElementById('question-q1').classList.remove('hidden');
+    });
 
-  // Activation questions audio 2
-  const audio2 = document.getElementById('audio2');
-  audio2.addEventListener('ended', function() {
-    document.getElementById('form-q3').classList.remove('hidden');
-  });
+    // AUDIO 2 - Activation questions
+    const audio2=document.getElementById('audio2');
+    audio2.addEventListener('ended',function(){
+      document.getElementById('question-q3').classList.remove('hidden');
+    });
 
-  function nextFormAudio2(formId) {
-    if (formId === 'form-q3') document.getElementById('form-q4').classList.remove('hidden');
-    if (formId === 'form-q4') document.getElementById('form-q5').classList.remove('hidden');
-    if (formId === 'form-q5') document.getElementById('form-q6').classList.remove('hidden');
-    // Après la dernière question, tu peux ajouter l'apparition de l'étape suivante
-  }
+    // SYSTÈME D'ESSAIS
+    let essaisQ={q1:0,q2:0,q3:0,q4:0,q5:0,q6:0};
 
-  // Système essais et indices
-  let essaisQ = {q1: 0, q2: 0, q3: 0, q4: 0, q5: 0, q6: 0};
-
-  function verifierQ1(f) {
-    const val = document.getElementById("input-q1").value.trim().toLowerCase().replace(/'/g, "");
-    const bons = ["de l'engouement", "delengouement"];
-    essaisQ.q1++;
-    if (bons.includes(val.replace(/\s+/g, " "))) {
-      document.getElementById("msg-q1").innerHTML = '<span class="success">✅ Bonne réponse !</span>';
-      nextFormAudio1('form-q1');
+    // QUESTION 1
+    function verifierQ1(f){
+      const val=document.getElementById("input-q1").value.trim().toLowerCase().replace(/'/g,"").replace(/\s+/g," ");
+      const bons=["de lengouement","delengouement"];
+      essaisQ.q1++;
+      if(bons.includes(val.replace(/\s+/g,""))){
+        document.getElementById("msg-q1").innerHTML='<span class="success">✅ Bonne réponse !</span>';
+        setTimeout(()=>{
+          document.getElementById('question-q2').classList.remove('hidden');
+          document.getElementById('question-q2').scrollIntoView({behavior:'smooth'});
+        },700);
+        return false;
+      }
+      document.getElementById("msg-q1").innerHTML='<span class="error">❌ Essayez encore !</span>';
+      if(essaisQ.q1>=3){
+        document.getElementById('indice-q1').textContent="💡 Indice : Cherchez un mot évoquant l'enthousiasme collectif";
+        document.getElementById('indice-q1').classList.remove('hidden');
+      }
       return false;
     }
-    document.getElementById("msg-q1").innerHTML = '<span class="error">❌ Essayez encore !</span>';
-    if (essaisQ.q1 >= 3) {
-      document.getElementById('indice-q1').textContent = "Indice : Cherchez un mot évoquant l’enthousiasme collectif";
-      document.getElementById('indice-q1').classList.remove('hidden');
-    }
-    return false;
-  }
 
-  function verifierQ2(f) {
-    const val = document.getElementById("input-q2").value.trim().toLowerCase();
-    const bons = ["la modularité", "lamodularité"];
-    essaisQ.q2++;
-    if (bons.includes(val.replace(/\s+/g, " "))) {
-      document.getElementById("msg-q2").innerHTML = '<span class="success">✅ Bonne réponse !</span>';
-      nextFormAudio1('form-q2');
+    // QUESTION 2
+    function verifierQ2(f){
+      const val=document.getElementById("input-q2").value.trim().toLowerCase().replace(/\s+/g,"");
+      const bons=["lamodularite","lamodularité"];
+      essaisQ.q2++;
+      if(bons.includes(val)){
+        document.getElementById("msg-q2").innerHTML='<span class="success">✅ Bonne réponse !</span>';
+        majProgression(2);
+        setTimeout(()=>{
+          document.getElementById('audio2-section').classList.remove('hidden');
+          document.getElementById('audio2-section').scrollIntoView({behavior:'smooth'});
+        },700);
+        return false;
+      }
+      document.getElementById("msg-q2").innerHTML='<span class="error">❌ Essayez encore !</span>';
+      if(essaisQ.q2>=3){
+        document.getElementById('indice-q2').textContent="💡 Indice : C'est la capacité à changer facilement l'agencement";
+        document.getElementById('indice-q2').classList.remove('hidden');
+      }
       return false;
     }
-    document.getElementById("msg-q2").innerHTML = '<span class="error">❌ Essayez encore !</span>';
-    if (essaisQ.q2 >= 3) {
-      document.getElementById('indice-q2').textContent = "Indice : C’est la capacité à changer facilement l’agencement";
-      document.getElementById('indice-q2').classList.remove('hidden');
-    }
-    return false;
-  }
 
-  function verifierQ3(f) {
-    const val = document.getElementById("input-q3").value.trim().toLowerCase();
-    const bons = ["la taille des salles", "latailledessalles"];
-    essaisQ.q3++;
-    if (bons.includes(val.replace(/\s+/g, " "))) {
-      document.getElementById("msg-q3").innerHTML = '<span class="success">✅ Bonne réponse !</span>';
-      nextFormAudio2('form-q3');
+    // QUESTION 3
+    function verifierQ3(f){
+      const val=document.getElementById("input-q3").value.trim().toLowerCase().replace(/\s+/g,"");
+      const bons=["latailledessalles"];
+      essaisQ.q3++;
+      if(bons.includes(val)){
+        document.getElementById("msg-q3").innerHTML='<span class="success">✅ Bonne réponse !</span>';
+        setTimeout(()=>{
+          document.getElementById('question-q4').classList.remove('hidden');
+          document.getElementById('question-q4').scrollIntoView({behavior:'smooth'});
+        },700);
+        return false;
+      }
+      document.getElementById("msg-q3").innerHTML='<span class="error">❌ Essayez encore !</span>';
+      if(essaisQ.q3>=3){
+        document.getElementById('indice-q3').textContent="💡 Indice : Cela concerne les mètres carrés disponibles";
+        document.getElementById('indice-q3').classList.remove('hidden');
+      }
       return false;
     }
-    document.getElementById("msg-q3").innerHTML = '<span class="error">❌ Essayez encore !</span>';
-    if (essaisQ.q3 >= 3) {
-      document.getElementById('indice-q3').textContent = "Indice : Cela concerne les mètres carrés disponibles";
-      document.getElementById('indice-q3').classList.remove('hidden');
-    }
-    return false;
-  }
 
-  function verifierQ4(f) {
-    const val = document.getElementById("input-q4").value.trim().toLowerCase();
-    const bons = ["le coût", "lecout"];
-    essaisQ.q4++;
-    if (bons.includes(val.replace(/\s+/g, " "))) {
-      document.getElementById("msg-q4").innerHTML = '<span class="success">✅ Bonne réponse !</span>';
-      nextFormAudio2('form-q4');
+    // QUESTION 4
+    function verifierQ4(f){
+      const val=document.getElementById("input-q4").value.trim().toLowerCase().replace(/\s+/g,"");
+      const bons=["lecout","lecoût"];
+      essaisQ.q4++;
+      if(bons.includes(val)){
+        document.getElementById("msg-q4").innerHTML='<span class="success">✅ Bonne réponse !</span>';
+        setTimeout(()=>{
+          document.getElementById('question-q5').classList.remove('hidden');
+          document.getElementById('question-q5').scrollIntoView({behavior:'smooth'});
+        },700);
+        return false;
+      }
+      document.getElementById("msg-q4").innerHTML='<span class="error">❌ Essayez encore !</span>';
+      if(essaisQ.q4>=3){
+        document.getElementById('indice-q4').textContent="💡 Indice : Pensez au budget à prévoir";
+        document.getElementById('indice-q4').classList.remove('hidden');
+      }
       return false;
     }
-    document.getElementById("msg-q4").innerHTML = '<span class="error">❌ Essayez encore !</span>';
-    if (essaisQ.q4 >= 3) {
-      document.getElementById('indice-q4').textContent = "Indice : Pensez au budget à prévoir";
-      document.getElementById('indice-q4').classList.remove('hidden');
-    }
-    return false;
-  }
 
-  function verifierQ5(f) {
-    const val = document.getElementById("input-q5").value.trim().toLowerCase();
-    const bons = ["la maintenance", "lamaintenance"];
-    essaisQ.q5++;
-    if (bons.includes(val.replace(/\s+/g, " "))) {
-      document.getElementById("msg-q5").innerHTML = '<span class="success">✅ Bonne réponse !</span>';
-      nextFormAudio2('form-q5');
+    // QUESTION 5
+    function verifierQ5(f){
+      const val=document.getElementById("input-q5").value.trim().toLowerCase().replace(/\s+/g,"");
+      const bons=["lamaintenance"];
+      essaisQ.q5++;
+      if(bons.includes(val)){
+        document.getElementById("msg-q5").innerHTML='<span class="success">✅ Bonne réponse !</span>';
+        setTimeout(()=>{
+          document.getElementById('question-q6').classList.remove('hidden');
+          document.getElementById('question-q6').scrollIntoView({behavior:'smooth'});
+        },700);
+        return false;
+      }
+      document.getElementById("msg-q5").innerHTML='<span class="error">❌ Essayez encore !</span>';
+      if(essaisQ.q5>=3){
+        document.getElementById('indice-q5').textContent="💡 Indice : Pensez à l'entretien du matériel";
+        document.getElementById('indice-q5').classList.remove('hidden');
+      }
       return false;
     }
-    document.getElementById("msg-q5").innerHTML = '<span class="error">❌ Essayez encore !</span>';
-    if (essaisQ.q5 >= 3) {
-      document.getElementById('indice-q5').textContent = "Indice : Pensez à l’entretien du matériel";
-      document.getElementById('indice-q5').classList.remove('hidden');
-    }
-    return false;
-  }
 
-  function verifierQ6(f) {
-    const val = document.getElementById("input-q6").value.trim().toLowerCase();
-    const bons = ["affectation", "un système de réservation", "unsystemedereservation"];
-    essaisQ.q6++;
-    if (bons.includes(val.replace(/\s+/g, " "))) {
-      document.getElementById("msg-q6").innerHTML = '<span class="success">✅ Bonne réponse !</span>';
-      // Tu peux ajouter ici l’apparition de la suite de ton parcours pédagogique
+    // QUESTION 6
+    function verifierQ6(f){
+      const val=document.getElementById("input-q6").value.trim().toLowerCase().replace(/\s+/g,"");
+      const bons=["affectation","unsystemedereservation","unsystèmedereservation"];
+      essaisQ.q6++;
+      if(bons.includes(val)){
+        document.getElementById("msg-q6").innerHTML='<span class="success">✅ Bonne réponse !</span>';
+        majProgression(3);
+        setTimeout(()=>{
+          document.getElementById('mindmap-section').classList.remove('hidden');
+          document.getElementById('mindmap-section').scrollIntoView({behavior:'smooth'});
+        },700);
+        return false;
+      }
+      document.getElementById("msg-q6").innerHTML='<span class="error">❌ Essayez encore !</span>';
+      if(essaisQ.q6>=3){
+        document.getElementById('indice-q6').textContent="💡 Indice : Cela peut fonctionner soit avec un emploi du temps dédié, soit avec la prise de créneaux en avance";
+        document.getElementById('indice-q6').classList.remove('hidden');
+      }
       return false;
     }
-    document.getElementById("msg-q6").innerHTML = '<span class="error">❌ Essayez encore !</span>';
-    if (essaisQ.q6 >= 3) {
-      document.getElementById('indice-q6').textContent = "Indice : Cela peut fonctionner soit avec un emploi du temps dédié, soit avec la prise de créneaux en avance";
-      document.getElementById('indice-q6').classList.remove('hidden');
-    }
-    return false;
-  }
 
-  // ... (garde toutes tes autres fonctions d’origine pour le chrono, notes, export, etc.)
-</script>
+    // CARTE MENTALE
+    const mindmapInput=document.getElementById('mindmap-input');
+    const mindmapPreview=document.getElementById('mindmap-preview');
+    const validateBtn=document.getElementById('validate-btn');
+    let mindmapFile=null;
+    mindmapInput.addEventListener('change',function(){
+      const f=this.files;
+      if(f){
+        const url=URL.createObjectURL(f);
+        mindmapPreview.innerHTML="<img src='"+url+"'>";
+        validateBtn.disabled=false;
+        mindmapFile=f;
+      }
+    });
+    
+    function validateMindmap(){
+      if(mindmapFile){
+        document.getElementById('mindmap-confirm').textContent="✅ Votre carte mentale a été prise en compte !";
+        document.getElementById('dl-link').classList.remove('hidden');
+        document.getElementById('activity-validation').classList.remove('hidden');
+        const reader=new FileReader();
+        reader.onload=function(e){
+          document.getElementById('dl-link').href=e.target.result;
+        };
+        reader.readAsDataURL(mindmapFile);
+        majProgression(4);
+      }
+    }
+    
+    function validerActivites(){
+      document.getElementById('validation-msg').innerHTML='<span class="success" style="font-size: 1.2em;">✅ Parfait ! Vous pouvez maintenant découvrir le message final !</span>';
+      setTimeout(()=>{
+        document.getElementById('final-section').classList.remove('hidden');
+        document.getElementById('final-section').scrollIntoView({behavior:'smooth'});
+      },1000);
+    }
+    
+    function envoyerMick(){
+      document.getElementById('envoi-msg').innerHTML='👅 <span style="color: #D2691E;"><strong>Mick</strong></span> part chercher l\'enveloppe bonus !<br>🎉 Rendez-vous auprès de l\'animateur ! 🎉';
+    }
+  </script>
 </body>
 </html>
