@@ -1,4 +1,6 @@
+Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'upload :
 
+```html```
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -55,7 +57,7 @@
     input[type="file"] { margin: 15px 0; }
     button { margin-top: 8px; background: #D2691E; color: #fff; border: none; border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1em; font-weight: 600; transition: background 0.3s ease, transform 0.2s ease; }
     button:hover { background: #A0522D; transform: translateY(-2px); }
-    button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    button:disabled { background: #ccc !important; cursor: not-allowed !important; transform: none !important; opacity: 0.6 !important; }
     .btn-success { background: #50C878; }
     .btn-success:hover { background: #3FB264; }
     .error { color: #E74C3C; font-weight: bold; font-size: 1em; margin-top: 10px; }
@@ -212,7 +214,7 @@
     <div class="section hidden" id="mindmap-section">
       <h2>Étape 3 : Carte mentale et validation</h2>
       <p>Soumettez une carte mentale des éléments de la classe flexible pour un échange avec l'autre groupe.</p>
-      <input type="file" accept="image/*" id="mindmap-input">
+      <input type="file" accept="image/*" id="mindmap-input" onchange="handleFileSelect()">
       <button onclick="validateMindmap()" id="validate-btn" disabled style="margin-top: 15px;">Valider l'upload</button>
       <div id="mindmap-preview"></div>
       <a id="dl-link" class="hidden" download="ma_cartementale.jpg">Télécharger l'image</a>
@@ -411,31 +413,34 @@
       return false;
     }
 
-    // CARTE MENTALE - CORRECTION ICI
-    const mindmapInput=document.getElementById('mindmap-input');
-    const mindmapPreview=document.getElementById('mindmap-preview');
-    const validateBtn=document.getElementById('validate-btn');
-    let mindmapFile=null;
+    // CARTE MENTALE - VERSION CORRIGÉE DÉFINITIVE
+    let mindmapFile = null;
 
-    mindmapInput.addEventListener('change',function(e){
-      const f=e.target.files;
-      if(f){
-        const url=URL.createObjectURL(f);
-        mindmapPreview.innerHTML="<img src='"+url+"' style='max-width:100%; height:auto; border:3px solid #E8C4A0; border-radius:10px; margin-top:15px;'>";
-        validateBtn.disabled=false;
-        mindmapFile=f;
-        console.log('Fichier chargé:', f.name);
+    function handleFileSelect() {
+      const input = document.getElementById('mindmap-input');
+      const preview = document.getElementById('mindmap-preview');
+      const btn = document.getElementById('validate-btn');
+      
+      if (input.files && input.files) {
+        mindmapFile = input.files;
+        const url = URL.createObjectURL(mindmapFile);
+        preview.innerHTML = '<img src="' + url + '" style="max-width:100%; height:auto; border:3px solid #E8C4A0; border-radius:10px; margin-top:15px;">';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        console.log('✅ Fichier chargé:', mindmapFile.name);
       }
-    });
+    }
     
-    function validateMindmap(){
-      if(mindmapFile){
-        document.getElementById('mindmap-confirm').textContent="✅ Votre carte mentale a été prise en compte !";
+    function validateMindmap() {
+      if (mindmapFile) {
+        document.getElementById('mindmap-confirm').textContent = "✅ Votre carte mentale a été prise en compte !";
         document.getElementById('dl-link').classList.remove('hidden');
         document.getElementById('activity-validation').classList.remove('hidden');
-        const reader=new FileReader();
-        reader.onload=function(e){
-          document.getElementById('dl-link').href=e.target.result;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('dl-link').href = e.target.result;
         };
         reader.readAsDataURL(mindmapFile);
         majProgression(4);
@@ -458,3 +463,16 @@
   </script>
 </body>
 </html>
+```
+
+---
+
+## ✅ **Ce qui a été corrigé :**
+
+1. **Ajout de `onchange="handleFileSelect()"` directement dans l'input file**
+2. **Fonction `handleFileSelect()` simplifiée et robuste**
+3. **Déblocage immédiat du bouton dès qu'un fichier est sélectionné**
+4. **Style CSS renforcé pour les boutons désactivés (`!important`)**
+5. **Console.log pour vérifier le bon chargement**
+
+**Le bouton "Valider l'upload" devrait maintenant se débloquer dès que tu choisis une image !** 🎸✅
