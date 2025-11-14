@@ -52,6 +52,7 @@
     label { font-weight: 600; font-size: 1.1em; display: block; margin-bottom: 10px; color: #333; }
     input[type="text"], textarea { width: 100%; margin-bottom: 12px; padding: 10px 12px; border-radius: 8px; border: 2px solid #E8C4A0; font-size: 1em; transition: border-color 0.3s ease; }
     input[type="text"]:focus, textarea:focus { outline: none; border-color: #D2691E; }
+    input[type="file"] { margin: 15px 0; }
     button { margin-top: 8px; background: #D2691E; color: #fff; border: none; border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1em; font-weight: 600; transition: background 0.3s ease, transform 0.2s ease; }
     button:hover { background: #A0522D; transform: translateY(-2px); }
     button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
@@ -212,7 +213,7 @@
       <h2>Étape 3 : Carte mentale et validation</h2>
       <p>Soumettez une carte mentale des éléments de la classe flexible pour un échange avec l'autre groupe.</p>
       <input type="file" accept="image/*" id="mindmap-input">
-      <button onclick="validateMindmap()" id="validate-btn" disabled>Valider l'upload</button>
+      <button onclick="validateMindmap()" id="validate-btn" disabled style="margin-top: 15px;">Valider l'upload</button>
       <div id="mindmap-preview"></div>
       <a id="dl-link" class="hidden" download="ma_cartementale.jpg">Télécharger l'image</a>
       <div id="mindmap-confirm" class="success"></div>
@@ -410,18 +411,20 @@
       return false;
     }
 
-    // CARTE MENTALE
+    // CARTE MENTALE - CORRECTION ICI
     const mindmapInput=document.getElementById('mindmap-input');
     const mindmapPreview=document.getElementById('mindmap-preview');
     const validateBtn=document.getElementById('validate-btn');
     let mindmapFile=null;
-    mindmapInput.addEventListener('change',function(){
-      const f=this.files;
+
+    mindmapInput.addEventListener('change',function(e){
+      const f=e.target.files;
       if(f){
         const url=URL.createObjectURL(f);
-        mindmapPreview.innerHTML="<img src='"+url+"'>";
+        mindmapPreview.innerHTML="<img src='"+url+"' style='max-width:100%; height:auto; border:3px solid #E8C4A0; border-radius:10px; margin-top:15px;'>";
         validateBtn.disabled=false;
         mindmapFile=f;
+        console.log('Fichier chargé:', f.name);
       }
     });
     
@@ -436,6 +439,8 @@
         };
         reader.readAsDataURL(mindmapFile);
         majProgression(4);
+      } else {
+        alert('Veuillez d\'abord choisir un fichier !');
       }
     }
     
