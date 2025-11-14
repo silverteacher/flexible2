@@ -1,6 +1,4 @@
-Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'upload :
 
-```html```
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -54,7 +52,6 @@ Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'u
     label { font-weight: 600; font-size: 1.1em; display: block; margin-bottom: 10px; color: #333; }
     input[type="text"], textarea { width: 100%; margin-bottom: 12px; padding: 10px 12px; border-radius: 8px; border: 2px solid #E8C4A0; font-size: 1em; transition: border-color 0.3s ease; }
     input[type="text"]:focus, textarea:focus { outline: none; border-color: #D2691E; }
-    input[type="file"] { margin: 15px 0; }
     button { margin-top: 8px; background: #D2691E; color: #fff; border: none; border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1em; font-weight: 600; transition: background 0.3s ease, transform 0.2s ease; }
     button:hover { background: #A0522D; transform: translateY(-2px); }
     button:disabled { background: #ccc !important; cursor: not-allowed !important; transform: none !important; opacity: 0.6 !important; }
@@ -65,10 +62,7 @@ Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'u
     .hint { background: #FFF4E6; color: #9A6324; padding: 10px 15px; border-radius: 8px; font-size: 0.95em; margin-top: 10px; display: block; border-left: 4px solid #FFA94D; }
     .notearea { min-height: 120px; font-size: 1em; }
     .hidden { display: none; }
-    #mindmap-preview img { max-width: 100%; height: auto; border: 3px solid #E8C4A0; border-radius: 10px; margin-top: 15px; }
     audio { width: 100%; outline: none; margin: 15px 0; }
-    #dl-link { display: inline-block; margin-top: 15px; color: #D2691E; font-weight: 600; text-decoration: none; font-size: 1em; }
-    #dl-link:hover { text-decoration: underline; }
     .export-buttons { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
     .export-buttons button { margin-top: 0; }
     .final-section { background: linear-gradient(135deg, #FFA94D 0%, #FFB976 100%); padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px; box-shadow: 0 5px 20px rgba(255, 169, 77, 0.3); }
@@ -80,6 +74,12 @@ Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'u
     footer a { color: #FFD89B; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
     .question-block { margin-bottom: 25px; padding: 20px; background: #FFF; border-radius: 10px; border-left: 4px solid #D2691E; }
+    .carte-mentale-box { background: #E8F5E9; padding: 25px; border-radius: 12px; border: 3px solid #50C878; margin-top: 20px; text-align: center; }
+    .carte-mentale-box h3 { color: #2E7D32; font-size: 1.4em; margin-bottom: 15px; }
+    .carte-mentale-box ul { text-align: left; display: inline-block; margin: 15px 0; }
+    .carte-mentale-box li { margin: 8px 0; font-size: 1.05em; }
+    .big-validate-btn { background: #50C878 !important; font-size: 1.3em !important; padding: 20px 40px !important; margin-top: 20px; }
+    .big-validate-btn:hover { background: #3FB264 !important; }
     @media (max-width: 768px) { body { padding: 0.5em; font-size: 14px; } .mission-intro h1 { font-size: 1.6em; } .music-icon { font-size: 2em; } .tongue-logo { font-size: 3em; } .escape-icon { font-size: 2em; } h1 { font-size: 1.5em; } h2 { font-size: 1.3em; } .step { width: 55px; height: 55px; font-size: 1.1em; } .section, .mission-intro, .container, .indice-section, .timer-section { padding: 15px 20px; } .progression { gap: 10px; } .timer-display { font-size: 2.5em; } .timer-controls { flex-direction: column; } .timer-controls button { width: 100%; } }
     @media (max-width: 480px) { .mission-intro h1 { font-size: 1.4em; } .step { width: 50px; height: 50px; font-size: 1em; } .export-buttons { flex-direction: column; } .export-buttons button { width: 100%; } .timer-display { font-size: 2em; } }
   </style>
@@ -210,19 +210,22 @@ Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'u
       </div>
     </div>
 
-    <!-- CARTE MENTALE -->
+    <!-- CARTE MENTALE SIMPLIFIÉE -->
     <div class="section hidden" id="mindmap-section">
-      <h2>Étape 3 : Carte mentale et validation</h2>
-      <p>Soumettez une carte mentale des éléments de la classe flexible pour un échange avec l'autre groupe.</p>
-      <input type="file" accept="image/*" id="mindmap-input" onchange="handleFileSelect()">
-      <button onclick="validateMindmap()" id="validate-btn" disabled style="margin-top: 15px;">Valider l'upload</button>
-      <div id="mindmap-preview"></div>
-      <a id="dl-link" class="hidden" download="ma_cartementale.jpg">Télécharger l'image</a>
-      <div id="mindmap-confirm" class="success"></div>
-      <div id="activity-validation" class="hidden" style="margin-top: 25px; padding: 20px; background: #E8F5E9; border-radius: 10px;">
-        <p style="font-size: 1.1em; margin-bottom: 15px;">✅ Avez-vous bien réalisé les activités et discuté avec vos collègues ?</p>
-        <button onclick="validerActivites()" class="btn-success" style="font-size: 1.1em;">J'ai bien réalisé les activités et discuté avec les collègues</button>
-        <div id="validation-msg" style="margin-top: 15px;"></div>
+      <h2>Étape 3 : Carte mentale et échange</h2>
+      
+      <div class="carte-mentale-box">
+        <h3>📋 Instructions pour la carte mentale</h3>
+        <ul>
+          <li>✏️ Créez une carte mentale avec les points clés du témoignage</li>
+          <li>📸 Prenez une photo de votre carte mentale</li>
+          <li>👥 Allez montrer votre travail au groupe <strong>Beatles</strong></li>
+          <li>💬 Échangez debout sur vos découvertes et réflexions</li>
+        </ul>
+        
+        <button onclick="validerCarteMentale()" class="big-validate-btn">✅ J'ai créé ma carte mentale et échangé avec le groupe Beatles</button>
+        
+        <div id="validation-carte" class="success hidden" style="margin-top: 20px; font-size: 1.2em;"></div>
       </div>
     </div>
 
@@ -240,10 +243,11 @@ Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'u
 
   <!-- MESSAGE FINAL -->
   <div class="final-section hidden" id="final-section">
-    <h2>🎉 MESSAGE FINAL 🎉</h2>
+    <h2>🎉 FÉLICITATIONS ! 🎉</h2>
     <div class="envelope-section">
-      <h3>🎸 Récupération de l'enveloppe bonus 🎸</h3>
-      <p style="font-size: 1.2em; margin: 20px 0;">Envoyez <strong>Mick</strong> pour me rencontrer et récupérer l'enveloppe bonus !</p>
+      <h3>🎸 Mission accomplie ! 🎸</h3>
+      <p style="font-size: 1.2em; margin: 20px 0;">Vous avez terminé toutes les étapes avec succès !</p>
+      <p style="font-size: 1.1em; margin: 20px 0;">Envoyez <strong>Mick</strong> pour récupérer l'enveloppe bonus !</p>
       <button onclick="envoyerMick()" class="mick-button">👅 Envoyer Mick chercher l'enveloppe</button>
       <div id="envoi-msg" style="margin-top: 20px; font-size: 1.2em; font-weight: bold;"></div>
     </div>
@@ -270,13 +274,13 @@ Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'u
     function exporterNotesTXT(){const notes=document.getElementById('notes').value;if(!notes.trim()){alert('Aucune note à exporter !');return;}const blob=new Blob([notes],{type:'text/plain'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='mes_notes_classe_flexible_stones.txt';a.click();URL.revokeObjectURL(url);}
     function exporterNotesPDF(){const notes=document.getElementById('notes').value;if(!notes.trim()){alert('Aucune note à exporter !');return;}const{jsPDF}=window.jspdf;const doc=new jsPDF();doc.setFontSize(16);doc.text('Mes notes - La classe flexible',20,20);doc.setFontSize(12);const lignes=doc.splitTextToSize(notes,170);doc.text(lignes,20,35);doc.save('mes_notes_classe_flexible_stones.pdf');}
     
-    // AUDIO 1 - Activation questions
+    // AUDIO 1
     const audio1=document.getElementById('audio1');
     audio1.addEventListener('ended',function(){
       document.getElementById('question-q1').classList.remove('hidden');
     });
 
-    // AUDIO 2 - Activation questions
+    // AUDIO 2
     const audio2=document.getElementById('audio2');
     audio2.addEventListener('ended',function(){
       document.getElementById('question-q3').classList.remove('hidden');
@@ -413,48 +417,15 @@ Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'u
       return false;
     }
 
-    // CARTE MENTALE - VERSION CORRIGÉE DÉFINITIVE
-    let mindmapFile = null;
-
-    function handleFileSelect() {
-      const input = document.getElementById('mindmap-input');
-      const preview = document.getElementById('mindmap-preview');
-      const btn = document.getElementById('validate-btn');
-      
-      if (input.files && input.files) {
-        mindmapFile = input.files;
-        const url = URL.createObjectURL(mindmapFile);
-        preview.innerHTML = '<img src="' + url + '" style="max-width:100%; height:auto; border:3px solid #E8C4A0; border-radius:10px; margin-top:15px;">';
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.style.cursor = 'pointer';
-        console.log('✅ Fichier chargé:', mindmapFile.name);
-      }
-    }
-    
-    function validateMindmap() {
-      if (mindmapFile) {
-        document.getElementById('mindmap-confirm').textContent = "✅ Votre carte mentale a été prise en compte !";
-        document.getElementById('dl-link').classList.remove('hidden');
-        document.getElementById('activity-validation').classList.remove('hidden');
-        
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('dl-link').href = e.target.result;
-        };
-        reader.readAsDataURL(mindmapFile);
-        majProgression(4);
-      } else {
-        alert('Veuillez d\'abord choisir un fichier !');
-      }
-    }
-    
-    function validerActivites(){
-      document.getElementById('validation-msg').innerHTML='<span class="success" style="font-size: 1.2em;">✅ Parfait ! Vous pouvez maintenant découvrir le message final !</span>';
+    // VALIDATION CARTE MENTALE SIMPLIFIÉE
+    function validerCarteMentale(){
+      document.getElementById('validation-carte').innerHTML='🎉 <strong>Parfait ! Votre carte mentale et vos échanges sont validés !</strong>';
+      document.getElementById('validation-carte').classList.remove('hidden');
+      majProgression(4);
       setTimeout(()=>{
         document.getElementById('final-section').classList.remove('hidden');
         document.getElementById('final-section').scrollIntoView({behavior:'smooth'});
-      },1000);
+      },1500);
     }
     
     function envoyerMick(){
@@ -463,16 +434,5 @@ Voici **le code HTML COMPLET** avec la correction définitive pour le bouton d'u
   </script>
 </body>
 </html>
-```
 
----
-
-## ✅ **Ce qui a été corrigé :**
-
-1. **Ajout de `onchange="handleFileSelect()"` directement dans l'input file**
-2. **Fonction `handleFileSelect()` simplifiée et robuste**
-3. **Déblocage immédiat du bouton dès qu'un fichier est sélectionné**
-4. **Style CSS renforcé pour les boutons désactivés (`!important`)**
-5. **Console.log pour vérifier le bon chargement**
-
-**Le bouton "Valider l'upload" devrait maintenant se débloquer dès que tu choisis une image !** 🎸✅
+**Le système est maintenant ultra-simple : un clic = validation = félicitations ! 🎸✅**
